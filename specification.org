@@ -1,0 +1,250 @@
+* Fuzzy Theorem Specification
+** Description
+   Fuzzy Theorem is an application for Android devices that allows mathematicians and math students 
+   to simply manage their information that they are studying. It does this through a simple user
+   interface that includes a "Search Layer", "Display" layer and a "Creation" layer. 
+
+*** The Fuzzy Theorem Search Layer
+    The Fuzzy Theorem Search Layer is a simple engine for finding data that
+    has been previously input. The way that it functions is as follows: 
+    A search bar at the top of the screen, as well as associated filter 
+    buttons allow us to search for substrings with attributes (*more on this later*).
+    As items come in, the view below the search layer, will display 
+    previews of hits.
+
+*** The Fuzzy Theorem Display Layer
+    The Fuzzy Theorem Display Layer is a layer for displaying data that we have
+    previously input. Fuzzy Theorem works on multiple mathematical structures:
+    theorems, lemmas, proofs, definitions, and *other*, which allows the user
+    to simply input text. Implementation of each of these structures in terms 
+    of the Display Layer will entail creating a Java interface that has methods
+    which our display layer will then call during render to determine how to
+    render items. In particular, we will probably use fragments to allow these
+    items to be dynamically rendered.
+
+*** The Fuzzy Theorem Creation Layer
+    The Fuzzy Theorem Creation Layer is a layer for creation of data that we wish to currently
+    input. It will allow us to determine the type of item, specified above, and
+    then fill out preset forms based on that. The display layer and creation layer
+    for Fuzzy Theorem may potentially use Latex if I can find a good library for
+    integrating that with android apps.
+
+** Implementation Details
+*** Libraries
+**** Database
+***** Name: SQLite3
+***** URL: https://www.sqlite.org
+***** Type: Business Logic
+      
+**** ORM
+***** Nam: Sugar
+***** UR: satyan.github.io/sugar/
+***** Type: Business Logic
+
+**** Math Display
+***** Name: Math View
+***** URL: https://www.github.com/kexanie/MathView
+***** Type: User Interface
+
+**** Search
+***** Name: MaterialSearchView
+***** URL: https://www.github.com/MiguelCatalan/MaterialSearchView
+***** Type: User Interface / Business Logic
+
+**** Material Design
+***** Name: Material Design Library
+***** URL: https://www.github.com/navasmdc/MaterialDesignLibrary
+***** Type: User Interface 
+***** Notes: Greatly helps with making responsive UI.
+
+** Local Database
+   Doing some quick Google searches tells me that the database of choice on Android is
+   SQLite3. So, we will use a SQLite database and then wrap that in an ORM. We will
+   use the sugar ORM which allows easy accessing of fields in our database.
+
+   Every one of the following Database fields will have an associated Java class 
+   which can be reified via the SQLite database, as well as queried. MathRelation will
+   be implemented as a Java enumerator which will then be serialized as string and 
+   checked for consistency on database writes and reads.
+
+*** Database Schema
+    Our database will be very simple: We will have the following objects
+
+**** MathRelation (Enumerator)
+      This is an enumerator that represents the type of relations that we can use in math:
+      iff and if. iff (if and only if) means that one thing leads to another, and 
+      another leads to one thing (two way). if means one thing simply leads to 
+      another thing, but not necessarily the converse.
+
+**** Theorem
+***** title: String
+***** reference: Maybe<String>
+***** precondition: ManyOf<String>
+***** postcondition: ManyOf<String>
+***** relation: MathRelation
+***** tags: ManyOf<String>
+
+**** Lemma
+***** title: String
+***** reference: Maybe<String>
+***** precondition: ManyOf<String>
+***** postcondition: ManyOf<String>
+***** relation: MathRelation
+***** tags: ManyOf<String>
+
+**** Definition
+***** title: String
+***** reference: Maybe<String>
+***** precondition: String
+***** postcondition: String
+***** tags: ManyOf<String>
+
+**** Proof
+***** title: String
+***** reference: Maybe<String>
+***** associated_theorem: Maybe<Title>
+***** content: String
+***** tags: ManyOf<String>
+
+**** Other
+***** title: String
+***** reference: Maybe<String>
+***** content: String
+***** tags: ManyOf<String>
+      
+*** The Sugar API
+     Sugars general API revolves around making Java classes and extending something called
+     SugarRecord. The General API documentation can be found at satyan.github.io/sugar/getting-started.html
+
+** Theoretical Java Classes 
+*** src/FuzzyTheorem.java
+    Holds general items that allow us to send messages to our data, for 
+    example if we want to clear it on the settings, or back-up or something like
+    that, also holds minor data types for describing fuzzy entries. May be changed.
+
+**** Example Of Use
+    #+BEGIN_SRC java
+    FuzzyTheorem app = new FuzzyTheorem("myDatabase:4000");
+    app.clearDatabase();
+    // etc..
+    #+END_SRC
+
+*** src/FuzzySearcher.java
+    This class functions as a wrapper around each of our fuzzy_entries that allows
+    us to use the IFuzzyEntry globally across every type to search. The idea is that
+    each one of our objects that implements IFuzzyEntry allows us to search the 
+    SQLite3 database for entries of that particular type, which is great when
+    we are creating objects, but when doing a search we may want ALL items, or
+    only proofs or definitions, etc. So FuzzySearcher wraps each one of said classes
+    We could use it as follows:
+
+**** Example Of Use
+    #+BEGIN_SRC java
+      FuzzySearcher fs = new FuzzySearcher();
+      HashMap query = new HashMap();
+      query.add("item-type", new ArrayList<String>{"Definition", "Thoerem"})
+      query.add("item-name", new ArrayList<String>{"Fermat"})
+      ArrayList<IFuzzyEntry> results = fs.query(query); 
+    #+END_SRC
+
+*** src/fuzzy-entry/*
+    Folder holding all of our data types, e.g. Database adapters.
+
+**** src/fuzzy-entry/IFuzzyEntry.java
+     Defines the interface for our fuzzy entry, specifically giving the API
+     which can be use regardless of data type from our UI for easy rendering
+     of each type of item.
+
+**** src/fuzzy-entry/Lemma.java
+     Implementation of IFuzzyEntry for the idea of a lemma as described above.
+     If any additional methods or placed, make sure to be able to dynamically call
+     then in some way and handle errors so we can still use IFuzzyEntry generically
+     in a safe manner.
+
+**** src/fuzzy-entry/Theorem.java
+     Implementation of IFuzzyEntry for the idea of a theorem as described above.
+     If any additional methods or placed, make sure to be able to dynamically call
+     then in some way and handle errors so we can still use IFuzzyEntry generically
+     in a safe manner.
+
+**** src/fuzzy-entry/Definition.java
+     Implementation of IFuzzyEntry for the idea of a definition as described above.
+     If any additional methods or placed, make sure to be able to dynamically call
+     then in some way and handle errors so we can still use IFuzzyEntry generically
+     in a safe manner.
+
+**** src/fuzzy-entry/Proof.java
+     Implementation of IFuzzyEntry for the idea of a definition as described above.
+     If any additional methods or placed, make sure to be able to dynamically call
+     then in some way and handle errors so we can still use IFuzzyEntry generically
+     in a safe manner.
+
+**** src/fuzzy-entry/Other.java
+     Implementation of IFuzzyEntry for the idea of a definition as described above.
+     If any additional methods or placed, make sure to be able to dynamically call
+     then in some way and handle errors so we can still use IFuzzyEntry generically
+     in a safe manner.
+
+**** *Example of general API*
+     #+BEGIN_SRC java
+       IFuzzyEntry entry = new Theorem();
+       entry.setName("Fermat's Little Thoerem")
+       // OR IFuzzyEntry entry = new Theorem("Fermat's Little Thoerem");
+       // OR Theorem entry = new Theorem("Fermat's Little Thoerem");
+
+       entry.setPrecondition("p \in \text{ prime numbers.}");
+       entry.setPostcondition("a^p -a \text{ is an integer multiple of } p\text{.}");
+       entry.setRelation(MathRelation::LAR) //LAR: Left and Right, aka one implies the other and viceversa. The other is LTR: Left to right.
+       entry.update(); // Updates our database with an entry based on our implementation. If said entry does not exist (checked by using name as primary key)
+                       // then we will create on using our ORM.
+     #+END_SRC
+
+   
+** API Usage
+   Once this API is built out, then it will be necessary for us to be able to see it via the 
+   Android UI. This is your job, I will explain how to use this API in the following list items.
+
+*** Starting Point
+    Look at my wire frames for each of the layers described above.
+
+*** Fragmentation
+    If we remember how fragments work, in general its like an activity that we can dynamically inject into
+    a view. So, each one of our layers that I described above will be implemented as a fragment that 
+    will call into the fuzzy_entry and FuzzyQuery API I described above. 
+
+*** On Tags *Important*
+    If you notice my database scheme, you can see that I have an attribute across every IFuzzyEntry called
+    tags. That is similar to how YouTube tags work. As a result, it is very important to allow users to
+    specify tags during searching and creating of items.
+
+*** Search Fragment (*Use MaterialSearchView*)
+    The search fragment will primarily use the FuzzyQuery class and the IFuzzyEntry interface. The way it
+    will work is checking user input into the entry box (which can be pulled from the MaterialSearch library)
+    and then using a callback which calls a FuzzyQuery objects query method for the current state of the
+    search fragment. It will be necessary to allow the use to filter each type of IFuzzyEntry. This can 
+    be done changing the item-type in the query hash map. I would suggest using check boxes to allow the 
+    user to query multiple items as well. The search fragment will output previews of our theorems, based
+    on title and getting a limited amount of the content of an IFuzzyEntry. As a result IFuzzyEntry's API
+    will probably have a preview method which returns a string.
+
+*** Create Fragment
+    This will be the page that a user can navigate to and create an entry. If you look at the actual schema
+    for each item that I described above, you can get a good idea of how to implement this. If you want to
+    allow for creation with a *single fragment* for each IFuzzyEntry type, then you could just conditionally 
+    enable or disable each UI component based on the type of FuzzyEntry. To facilitate this I could give
+    IFuzzyEntry a method named .entryType() which would allow you to do an easy if/else across each type.
+
+*** Display Fragment
+    This fragment will be passed on it's creation an IFuzzyEntry. In similar vein to Create Fragment, you
+    can dynamically enable and disable UI components to allow a single implementation of this fragment. 
+    *Rendering latex* can be done using the MathView library that I have a link of above. Just pass the
+    string into the MathView that our IFuzzyEntry has and it will automatically render the Latex. This
+    means that my IFuzzyEntry will have a method called getContent, which will return the latex that our
+    item has.
+
+*** Integration Of Application
+    Finally we would have a settings and a about page, which would be easy to make and accessible from the
+    menu. This is to ensure that Baugh will give us full credit because he said we need multiple activities.
+    Even though fragments are basically activities, want to be safe. After this point, all that must be
+    done is integration of the app similar to project 2. I would suggest viewing your implementation of that
+    so you can just copy and paste your fragments.
