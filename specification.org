@@ -199,7 +199,6 @@
                        // then we will create on using our ORM.
      #+END_SRC
 
-   
 ** API Usage
    Once this API is built out, then it will be necessary for us to be able to see it via the 
    Android UI. This is your job, I will explain how to use this API in the following list items.
