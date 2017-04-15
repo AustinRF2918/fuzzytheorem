@@ -1,13 +1,13 @@
-package com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry;
+package ${PACKAGE_NAME};
 
 import java.security.KeyException;
 import java.util.HashMap;
 
-public class Theorem extends FuzzyEntry {
+public class ${NAME} extends FuzzyEntry {
     private String precondition;
     private String postcondition;
 
-    public Theorem(String precondition, String postcondition) {
+    public ${NAME}(String precondition, String postcondition) {
         this.precondition = precondition;
         this.postcondition = postcondition;
     }
@@ -22,7 +22,7 @@ public class Theorem extends FuzzyEntry {
                 postcondition = value;
                 break;
             default:
-                throw new KeyException("The key you entered to a Theorem (" + key + ") does not exist.");
+                throw new KeyException("The key you entered to a ${NAME} (" + key + ") does not exist.");
         }
     }
 
@@ -34,7 +34,7 @@ public class Theorem extends FuzzyEntry {
             case "postcondition":
                 return postcondition;
             default:
-                throw new KeyException("The key you entered to a Theorem (" + key + ") does not exist.");
+                throw new KeyException("The key you entered to a ${NAME} (" + key + ") does not exist.");
         }
     }
 
