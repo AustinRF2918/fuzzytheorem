@@ -28,4 +28,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.github.satyan:sugar:1.4'
+    compile 'io.github.kexanie.library:MathView:0.0.6'
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
 }
