@@ -116,7 +116,7 @@
      Sugars general API revolves around making Java classes and extending something called
      SugarRecord. The General API documentation can be found at satyan.github.io/sugar/getting-started.html
 
-** Theoretical Java Classes 
+** Theoretical Java Classes (Back-end, Austin)
 *** src/FuzzyTheorem.java
     Holds general items that allow us to send messages to our data, for 
     example if we want to clear it on the settings, or back-up or something like
@@ -198,6 +198,74 @@
        entry.update(); // Updates our database with an entry based on our implementation. If said entry does not exist (checked by using name as primary key)
                        // then we will create on using our ORM.
      #+END_SRC
+
+** Theoretical Java Classes (Front-end, Dominic)
+   Note most of this is just my *advice*, if there 
+   is a better way to do something, do that.
+
+*** src/fragments/SearchFragment.java 
+    This would be the implementation of the whole search thing as described in
+    the wireframes.
+
+*** src/fragments/EntryFragment.java (Entry implements Fragment)
+    An implementation of a fragment that has an extra function called *getType*.
+    *getType* is used to set that views current item type (Thoerem, Definition, etc).
+    This will then be used from the sub-classes to do their work with the back-end API.
+
+**** Key Method(s)
+     They key method here is the makeType function. This will be used further down the
+     inheritance chain with the refresh() function.
+
+*** src/fragments/EntryCreationFragment.java 
+    A subclass of the above EntryFragment that has a an implemented refresh. Theoretically,
+    it would be possible to make Entry an abstract class that requires its children to 
+    be instantiated. This would be useful because we never actually call Entry directly.
+
+**** Key Method(s)
+     The key method here is the refresh method, which is potentially called after every
+     makeType call. What refresh will do can be illustrated as follows:
+
+     #+BEGIN_SRC Java
+       EntryCreation entryCreationView = new EntryCreationView
+       // Currently the default item: Thoerem
+       
+       entryChooserDropdown.setEventHandler(
+           void handler(String newState) {
+               entryCreationView.makeType(newState);
+               entryCreationView.refresh(); //Like I said, maybe just have makeType call refresh internally by providing default refresh at base case that does nothing...
+           }
+       )
+     #+END_SRC
+
+*** src/fragments/EntryViewingFragment.java 
+    A subclass of the above EntryFragment that has a an implemented refresh. Theoretically,
+    it would be possible to make Entry an abstract class that requires its children to 
+    be instantiated. This would be useful because we never actually call Entry directly.
+
+**** Key Method(s)
+     The key method here is the refresh method, which is potentially called after every
+     makeType call. What refresh will do can be illustrated as follows:
+
+     #+BEGIN_SRC Java
+       //See above implementation
+     #+END_SRC
+
+*** Note On Both Of These Classes (*On The Implementation Of Refresh*)
+    Both of these classes differ primarily in their implementations of
+    refresh. The way refresh would theoretically work would be
+    first resetting the state of the entire fragment (AKA, re initialization), and following
+    this deleting extraneous items that our fragment does not need. This means that in the
+    XML, you will define *every element that every fragment has*. Then
+    subtractively reduce as you go on....
+
+*** src/activities/SearchActivity.java
+    This activity would include the EntryViewingFragment, as well as our whole search API thing.
+
+*** src/activities/MakeActivity.java
+    This would include our EntryCreationFragment.
+   
+*** src/activities/SettingsActivity.java 
+    Simple, just mock this and I will fill it in.
 
 ** API Usage
    Once this API is built out, then it will be necessary for us to be able to see it via the 
