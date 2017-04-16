@@ -7,6 +7,9 @@ public class Definition extends FuzzyEntry {
     private String symbolContent;
     private String symbolReplacer;
 
+    public Definition() {
+    }
+
     public Definition(String symbolContent, String symbolReplacer) {
         this.symbolContent = symbolContent;
         this.symbolReplacer = symbolReplacer;

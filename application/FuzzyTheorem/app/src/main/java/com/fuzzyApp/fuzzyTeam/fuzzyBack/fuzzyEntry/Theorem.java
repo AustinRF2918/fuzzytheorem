@@ -12,6 +12,10 @@ public class Theorem extends FuzzyEntry {
         this.postcondition = postcondition;
     }
 
+    public Theorem() {
+
+    }
+
     /**
      * @param key
      * @param value

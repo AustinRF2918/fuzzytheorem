@@ -4,11 +4,13 @@ import java.security.KeyException;
 import java.util.HashMap;
 
 public class Lemma extends FuzzyEntry {
+    // TODO: Add relation String for rendering on frontend. Enumerator
+    // is too constrained: Just use string and handle it from frontend.
     private String precondition;
     private String postcondition;
 
-    // TODO: Add relation String for rendering on frontend. Enumerator
-    // is too constrained: Just use string and handle it from frontend.
+    public Lemma() {
+    }
 
     public Lemma(String precondition, String postcondition) {
         this.precondition = precondition;

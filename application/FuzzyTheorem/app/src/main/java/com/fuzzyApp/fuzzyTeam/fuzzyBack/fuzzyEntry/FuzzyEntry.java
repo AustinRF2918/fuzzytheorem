@@ -13,11 +13,11 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     // Easily set and get name of an item in our database
     // These methods apply to any child and should be the same across.
-    void setName(String name) {
+    public void setName(String name) {
         entryName = name;
     }
 
-    String getName() {
+    public String getName() {
         return entryName;
     }
 
@@ -27,7 +27,7 @@ public abstract class FuzzyEntry extends SugarRecord {
         entryDescription = description;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return entryDescription;
     }
 
@@ -38,7 +38,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * Overwrites the previous array list.
      */
     // Easily set, add, and query tags on our fuzzyEntry objects.
-    void setTags(ArrayList<String> tagList) {
+    public void setTags(ArrayList<String> tagList) {
         entryTags = tagList;
     }
 
@@ -48,7 +48,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * Adds a tag to our FuzzyEntry. This allows for YouTube style
      * searching and querying.
      */
-    void addTag(String tag) {
+    public void addTag(String tag) {
         entryTags.add(tag);
     }
 
@@ -59,7 +59,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * Checks for the existence of a tag in a FuzzyEntry. Useful
      * for querying from the frontend during a search.
      */
-    boolean hasTag(String tag) {
+    public boolean hasTag(String tag) {
         return entryTags.contains(tag);
     }
 
@@ -73,7 +73,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * all of the fields, but does not actually destroy the data
      * base entry. To do this, one must call the commit method.
      */
-    void clear() {
+    public void clear() {
         clearChild();
 
         entryDescription = "";
@@ -87,7 +87,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * existence of an attribute in a FuzzyEntry.
      *
      */
-    boolean hasAttribute(String key) {
+    public boolean hasAttribute(String key) {
         if (key.equals("name") || key.equals("description")) {
             return true;
         }
@@ -106,7 +106,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * this method will throw a KeyException in the case that said
      * key is not found in our FuzzyEntry.
      */
-    String getString(String key) throws KeyException {
+    public String getString(String key) throws KeyException {
         if (key.equals("name")) {
             return entryName;
         } else if (key.equals("description")) {
@@ -126,7 +126,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      * assisting in querying from the front end. It is useful because otherwise
      * we would have to maintain lists of different items.
      */
-    void putString(String key, String value) throws KeyException {
+    public void putString(String key, String value) throws KeyException {
         if (key.equals("name")) {
             entryName = value;
         } else if (key.equals("description")) {

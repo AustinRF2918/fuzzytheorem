@@ -6,6 +6,10 @@ import java.util.HashMap;
 public class Other extends FuzzyEntry {
     private String statement;
 
+    public Other() {
+
+    }
+
     public Other(String statement) {
         this.statement = statement;
     }
