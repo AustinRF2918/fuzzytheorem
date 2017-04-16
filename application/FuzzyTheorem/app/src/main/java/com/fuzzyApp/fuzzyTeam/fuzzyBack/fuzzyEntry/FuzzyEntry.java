@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class FuzzyEntry extends SugarRecord {
-    String entryName;
-    String entryDescription;
-    ArrayList<String> entryTags;
+    private String entryName;
+    private String entryDescription;
+    private ArrayList<String> entryTags;
 
     // Easily set and get name of an item in our database
     // These methods apply to any child and should be the same across.
@@ -88,7 +88,7 @@ public abstract class FuzzyEntry extends SugarRecord {
      *
      */
     boolean hasAttribute(String key) {
-        if (key == "name" || key == "description") {
+        if (key.equals("name") || key.equals("description")) {
             return true;
         }
 
@@ -107,9 +107,9 @@ public abstract class FuzzyEntry extends SugarRecord {
      * key is not found in our FuzzyEntry.
      */
     String getString(String key) throws KeyException {
-        if (key == "name") {
+        if (key.equals("name")) {
             return entryName;
-        } else if (key == "description") {
+        } else if (key.equals("description")) {
             return entryDescription;
         } else {
             return getStringChild(key);
@@ -127,9 +127,9 @@ public abstract class FuzzyEntry extends SugarRecord {
      * we would have to maintain lists of different items.
      */
     void putString(String key, String value) throws KeyException {
-        if (key == "name") {
+        if (key.equals("name")) {
             entryName = value;
-        } else if (key == "description") {
+        } else if (key.equals("description")) {
             entryDescription = value;
         } else {
             putStringChild(key, value);
