@@ -16,19 +16,11 @@ import com.orm.SugarRecord;
 import junit.framework.Assert;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.security.KeyException;
-import java.util.ArrayList;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by Austin on 4/15/17.
@@ -132,6 +124,10 @@ public class FuzzyEntryTest {
 
     @Test
     public void testSerialization(){
+        // Tests for the general property that if we send an item to
+        // the database, when we retrieve it, it will be functionally the same as
+        // the thing we put in.
+
         try {
             Assert.assertTrue(theoremEqual((Theorem) fermatsTheoremDeserialized, (Theorem) fermatsTheorem));
             Assert.assertTrue(lemmaEqual ((Lemma) pumpingLemmaDeserialized, (Lemma) pumpingLemma));
@@ -141,5 +137,55 @@ public class FuzzyEntryTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testMutability() {
+        // Tests that changes to local models that are commited persist on repull.
+        // basically a sanity test for our ORM.
+        try {
+            fermatsTheoremDeserialized.putString("precondition", "testing");
+            Long id = fermatsTheoremDeserialized.save();
+
+            fermatsTheoremDeserialized = SugarRecord.findById(Theorem.class, id);
+            Assert.assertTrue(fermatsTheoremDeserialized.getString("precondition").equals("testing"));
+        } catch (KeyException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test(expected = KeyException.class)
+    public void testErrorsTheorem() throws KeyException {
+        // Makes sure Theorem API works as intended.
+
+        fermatsTheoremDeserialized.putString("nonexistent-field", "hi!");
+    }
+
+    @Test(expected = KeyException.class)
+    public void testErrorsDefinition() throws KeyException {
+        // Makes sure Definition API works as intended.
+
+        myDefinitionDeserialized.putString("nonexistent-field", "hi!");
+    }
+
+    @Test(expected = KeyException.class)
+    public void testErrorsLemma() throws KeyException {
+
+        // Makes sure Definition API works as intended.
+        pumpingLemmaDeserialized.putString("nonexistent-field", "hi!");
+    }
+
+    @Test(expected = KeyException.class)
+    public void testErrorsOther() throws KeyException {
+        // Makes sure Definition API works as intended.
+
+        otherDeserialized.putString("nonexistent-field", "hi!");
+    }
+
+    @Test(expected = KeyException.class)
+    public void testErrorsProof() throws KeyException {
+        // Makes sure Definition API works as intended.
+
+        myProofDeserialized.putString("nonexistent-field", "hi!");
     }
 }
