@@ -63,7 +63,7 @@ public abstract class FuzzyEntry extends SugarRecord {
         return entryTags.contains(tag);
     }
 
-    ArrayList<String> getTags() {
+    public ArrayList<String> getTags() {
         return entryTags;
     }
 
