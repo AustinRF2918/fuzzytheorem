@@ -85,4 +85,12 @@ public class Lemma extends FuzzyEntry {
         currentState.put("postcondition", postcondition);
         return currentState;
     }
+
+    /**
+     * @return Returns a stringified version of a FuzzyEntry's name.
+     */
+    @Override
+    public String entryType() {
+	return "Lemma";
+    }
 }

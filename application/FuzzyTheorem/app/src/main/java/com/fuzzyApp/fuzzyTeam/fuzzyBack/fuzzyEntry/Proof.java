@@ -87,4 +87,12 @@ public class Proof extends FuzzyEntry {
         currentState.put("content", content);
         return currentState;
     }
+
+    /**
+     * @return Returns a stringified version of a FuzzyEntry's name.
+     */
+    @Override
+    public String entryType() {
+	return "Proof";
+    }
 }
