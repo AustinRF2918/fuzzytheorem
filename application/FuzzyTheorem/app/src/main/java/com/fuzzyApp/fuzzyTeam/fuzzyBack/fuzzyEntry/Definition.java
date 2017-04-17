@@ -83,4 +83,12 @@ public class Definition extends FuzzyEntry {
         currentState.put("symbolReplacer", symbolReplacer);
         return currentState;
     }
+
+    /**
+     * @return Returns a stringified version of a FuzzyEntry's name.
+     */
+    @Override
+    public String entryType() {
+	return "Definition";
+    }
 }

@@ -75,4 +75,12 @@ public class Other extends FuzzyEntry {
         currentState.put("statement", statement);
         return currentState;
     }
+
+    /**
+     * @return Returns a stringified version of a FuzzyEntry's name.
+     */
+    @Override
+    public String entryType() {
+	return "Other";
+    }
 }

@@ -138,6 +138,7 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     // These are functions that must be implemented by a child
     // of this abstract class to allow the API to work dynamically.
+    abstract public String entryType();
     abstract void putStringChild(String key, String value) throws KeyException;
     abstract String getStringChild(String key) throws KeyException;
     abstract HashMap<String, String> getAttributeMapChild();

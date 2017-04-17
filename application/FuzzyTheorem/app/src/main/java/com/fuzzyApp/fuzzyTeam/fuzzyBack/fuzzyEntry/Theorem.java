@@ -85,4 +85,11 @@ public class Theorem extends FuzzyEntry {
         return currentState;
     }
 
+    /**
+     * @return Returns a stringified version of a FuzzyEntry's name.
+     */
+    @Override
+    public String entryType() {
+	return "Theorem";
+    }
 }
