@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Definition;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
@@ -13,7 +14,7 @@ import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Proof;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Theorem;
 import com.orm.SugarContext;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private void generateSugarTables() {
         // You gotta generate them Sugar Tables man
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
         //Load up fragment
         // Create a new Fragment to be placed in the activity layout
         CreateEntryFragment createEntryFragment = new CreateEntryFragment();
@@ -49,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
 // Commit the transaction
         transaction.commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //inflate the menu
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
 
     protected void onTerminate(Bundle savedInstanceState) {
         SugarContext.terminate();
