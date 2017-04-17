@@ -25,7 +25,7 @@ import java.security.KeyException;
 /**
  * Created by Austin on 4/15/17.
  *
- * Tests the Definition API.
+ * Tests the FuzzyEntry API.
  */
 
 @RunWith(AndroidJUnit4.class)

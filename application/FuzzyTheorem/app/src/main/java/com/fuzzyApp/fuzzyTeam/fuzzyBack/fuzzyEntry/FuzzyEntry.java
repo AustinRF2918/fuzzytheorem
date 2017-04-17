@@ -11,8 +11,6 @@ public abstract class FuzzyEntry extends SugarRecord {
     private String entryDescription;
     private ArrayList<String> entryTags;
 
-    // Easily set and get name of an item in our database
-    // These methods apply to any child and should be the same across.
     public void setName(String name) {
         entryName = name;
     }
@@ -21,8 +19,6 @@ public abstract class FuzzyEntry extends SugarRecord {
         return entryName;
     }
 
-    // Easily set and get description of an item in our database
-    // These methods apply to any child and should be the same across.
     void setDescription(String description) {
         entryDescription = description;
     }
@@ -31,13 +27,10 @@ public abstract class FuzzyEntry extends SugarRecord {
         return entryDescription;
     }
 
-    /**
-     * @param tagList
-     *
-     * Sets a FuzzyEntry's tags to be an ArrayList of strings.
-     * Overwrites the previous array list.
-     */
-    // Easily set, add, and query tags on our fuzzyEntry objects.
+    public ArrayList<String> getTags() {
+        return entryTags;
+    }
+
     public void setTags(ArrayList<String> tagList) {
         entryTags = tagList;
     }
@@ -61,10 +54,6 @@ public abstract class FuzzyEntry extends SugarRecord {
      */
     public boolean hasTag(String tag) {
         return entryTags.contains(tag);
-    }
-
-    public ArrayList<String> getTags() {
-        return entryTags;
     }
 
     /**
@@ -138,6 +127,7 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     // These are functions that must be implemented by a child
     // of this abstract class to allow the API to work dynamically.
+
     abstract public String entryType();
     abstract void putStringChild(String key, String value) throws KeyException;
     abstract String getStringChild(String key) throws KeyException;

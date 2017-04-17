@@ -13,14 +13,19 @@ import java.util.List;
 
 /**
  * Created by Austin on 4/15/17.
- * To be implemented.
  */
 
 public class FuzzySearcher {
-    public FuzzySearcher() {
-
-    }
-
+    /**
+     * @return A HashSet with all the unique FuzzyEntries current loaded.
+     *
+     * Gets every FuzzyItem that is currently serialized in our
+     * databaase and deserializes them as a hashset.
+     *
+     * Important note: Make sure to use this in conjunction
+     * with the Java Set API to do unions and intersections during
+     * queries for items.
+     */
     public HashSet<FuzzyEntry> getAllFuzzyItems() {
         List<Definition> definitionList = Definition.listAll(Definition.class);
         List<Lemma> lemmaList = Lemma.listAll(Lemma.class);
@@ -39,6 +44,17 @@ public class FuzzySearcher {
         return new HashSet<FuzzyEntry>(allList);
     }
 
+    /**
+     * @param name
+     * @return A HashSet with unique FuzzyEntries.
+     * 
+     * Gets every FuzzyItem that is currently serialized in our
+     * databaase and deserializes them as a hashset.
+     *
+     * Important note: Make sure to use this in conjunction
+     * with the Java Set API to do unions and intersections during
+     * queries for items.
+     */
     public HashSet<FuzzyEntry> filterByName(String name) {
         HashSet<FuzzyEntry> filteredSet = new HashSet<FuzzyEntry>();
         HashSet<FuzzyEntry> superSet = getAllFuzzyItems();
@@ -52,6 +68,17 @@ public class FuzzySearcher {
         return filteredSet;
     }
 
+    /**
+     * @param tagList
+     * @return A HashSet with unique FuzzyEntries.
+     * 
+     * Takes a list of tags (which are strings) and 
+     * filters our local database for items with that tag.
+     *
+     * Important note: Make sure to use this in conjunction
+     * with the Java Set API to do unions and intersections during
+     * queries for items.
+     */
     public HashSet<FuzzyEntry> filterByTags(ArrayList<String> tagList) {
         HashSet<FuzzyEntry> filteredSet = new HashSet<FuzzyEntry>();
         HashSet<FuzzyEntry> superSet = getAllFuzzyItems();
@@ -72,6 +99,18 @@ public class FuzzySearcher {
 
         return filteredSet;
     }
+
+    /**
+     * @param category
+     * @return A HashSet with unique FuzzyEntries.
+     * 
+     * Takes a single string which represents a category of 
+     * FuzzyEntries (currently Definition, Lemma, Other, Proof, Theorem.)
+     *
+     * Important note: Make sure to use this in conjunction
+     * with the Java Set API to do unions and intersections during
+     * queries for items.
+     */
 
     public HashSet<FuzzyEntry> filterByCategory(String category) {
         HashSet<FuzzyEntry> filteredSet = new HashSet<FuzzyEntry>();
