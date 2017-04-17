@@ -1,6 +1,7 @@
 package com.fuzzyApp.fuzzyTeam.fuzzyFront;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -29,9 +30,30 @@ public class MainActivity extends AppCompatActivity {
         SugarContext.init(this);
         generateSugarTables();
         setContentView(R.layout.activity_main);
+
+
+
+
+        //Load up fragment
+        // Create a new Fragment to be placed in the activity layout
+        CreateEntryFragment createEntryFragment = new CreateEntryFragment();
+        // Add the fragment to the 'fragment_container' FrameLayout
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.activity_main, createEntryFragment);
+        transaction.addToBackStack(null);
+
+// Commit the transaction
+        transaction.commit();
     }
 
     protected void onTerminate(Bundle savedInstanceState) {
         SugarContext.terminate();
     }
+
+
+
 }
