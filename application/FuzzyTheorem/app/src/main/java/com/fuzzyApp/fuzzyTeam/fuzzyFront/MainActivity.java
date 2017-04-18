@@ -1,10 +1,12 @@
 package com.fuzzyApp.fuzzyTeam.fuzzyFront;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Definition;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
@@ -15,6 +17,9 @@ import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Theorem;
 import com.orm.SugarContext;
 
 public class MainActivity extends AppCompatActivity{
+    Fragment newMainFragment;   //newFragment is the next fragment that is going to be placed over the main activity
+
+    FragmentTransaction transaction;
 
     private void generateSugarTables() {
         // You gotta generate them Sugar Tables man
@@ -33,20 +38,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
-        //Load up fragment
-        // Create a new Fragment to be placed in the activity layout
-        CreateEntryFragment createEntryFragment = new CreateEntryFragment();
-        // Add the fragment to the 'fragment_container' FrameLayout
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.activity_main, createEntryFragment);
-        transaction.addToBackStack(null);
-
-// Commit the transaction
-        transaction.commit();
+        replaceMainFragment("search");
     }
 
     @Override
@@ -57,10 +49,65 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.create_menu_item:
+                if(item.isChecked())
+                    item.setChecked(false);
+                else
+                    item.setChecked(true);
+                replaceMainFragment("create");
+                return true;
+            case R.id.search_menu_item:
+                if(item.isChecked())
+                    item.setChecked(false);
+                else
+                    item.setChecked(true);
+                replaceMainFragment("search");
+                return true;
+            case R.id.display_menu_item:
+                if(item.isChecked())
+                    item.setChecked(false);
+                else
+                    item.setChecked(true);
+                replaceMainFragment("display");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     protected void onTerminate(Bundle savedInstanceState) {
         SugarContext.terminate();
     }
 
+    private void replaceMainFragment(String fragmentName) {
+        try{
+            switch (fragmentName) {
+                case "create":
+                    newMainFragment = new CreateEntryFragment();
+                    break;
+                case "search":
+                    newMainFragment = new SearchEntryFragment();
+                    break;
+                case "display":
+                    newMainFragment = new DisplayEntryFragment();
+                    break;
+            }
+        }
+        catch (Exception e){
+            System.out.println("trying to replace main activity with invalid fragment name");
+        }
 
-
+        try {
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.activity_main, newMainFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        catch (Exception e){
+            System.out.println("could not replace main activity with new fragment");
+        }
+    }
 }

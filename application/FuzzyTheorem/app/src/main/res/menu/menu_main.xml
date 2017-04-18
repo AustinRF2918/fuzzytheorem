@@ -5,18 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/create"
+            android:id="@+id/create_menu_item"
             android:orderInCategory="1"
             app:showAsAction="never"
             android:title="Create"/>
         <item
-            android:id="@+id/search"
-            android:orderInCategory="1"
+            android:id="@+id/search_menu_item"
+            android:orderInCategory="2"
             app:showAsAction="never"
             android:title="Search"/>
         <item
-            android:id="@+id/display"
-            android:orderInCategory="1"
+            android:id="@+id/display_menu_item"
+            android:orderInCategory="3"
             app:showAsAction="never"
             android:title="Display"/>
     </group>

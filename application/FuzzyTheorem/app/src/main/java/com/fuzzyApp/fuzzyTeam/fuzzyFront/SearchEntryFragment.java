@@ -18,4 +18,7 @@ public class SearchEntryFragment extends Fragment {
 
         return view;
     }
+    public String getFragmentName(){
+        return "search";
+    }
 }

@@ -18,4 +18,7 @@ public class DisplayEntryFragment extends Fragment {
 
         return view;
     }
+    public String getFragmentName(){
+        return "display";
+    }
 }

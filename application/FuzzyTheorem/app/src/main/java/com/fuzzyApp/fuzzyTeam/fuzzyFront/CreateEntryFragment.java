@@ -18,4 +18,8 @@ public class CreateEntryFragment extends Fragment {
 
         return view;
     }
+
+    public String getFragmentName(){
+        return "create";
+    }
 }
