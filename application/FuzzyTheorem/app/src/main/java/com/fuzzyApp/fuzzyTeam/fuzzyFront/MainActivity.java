@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
-        replaceMainFragment("search");
+        replaceMainFragment("Search");
     }
 
     @Override
@@ -51,31 +51,9 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.create_menu_item:
-                if(item.isChecked())
-                    item.setChecked(false);
-                else
-                    item.setChecked(true);
-                replaceMainFragment("create");
-                return true;
-            case R.id.search_menu_item:
-                if(item.isChecked())
-                    item.setChecked(false);
-                else
-                    item.setChecked(true);
-                replaceMainFragment("search");
-                return true;
-            case R.id.display_menu_item:
-                if(item.isChecked())
-                    item.setChecked(false);
-                else
-                    item.setChecked(true);
-                replaceMainFragment("display");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        String fragmentName = (String)item.getTitle();
+        replaceMainFragment(fragmentName);
+        return true;
     }
 
     protected void onTerminate(Bundle savedInstanceState) {
@@ -85,13 +63,13 @@ public class MainActivity extends AppCompatActivity{
     private void replaceMainFragment(String fragmentName) {
         try{
             switch (fragmentName) {
-                case "create":
+                case "Create":
                     newMainFragment = new CreateEntryFragment();
                     break;
-                case "search":
+                case "Search":
                     newMainFragment = new SearchEntryFragment();
                     break;
-                case "display":
+                case "Display":
                     newMainFragment = new DisplayEntryFragment();
                     break;
             }
