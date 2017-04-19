@@ -1,5 +1,6 @@
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
+
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.TabHost;
 
@@ -34,19 +35,22 @@ import java.util.HashSet;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class FuzzySearcherTest {
-    FuzzyTheorem applicationState;
-    FuzzySearcher applicationSearch;
+    private FuzzyTheorem applicationState;
+    private FuzzySearcher applicationSearch;
 
     // Mock fuzzy entries we will use for
     // running our tests.
-    FuzzyEntry eulersPhi;
-    FuzzyEntry identity;
-    FuzzyEntry communitivity;
-    FuzzyEntry leplaceNote;
-    FuzzyEntry factorNote;
-    FuzzyEntry pumpingLemma;
-    FuzzyEntry eulersTheorem;
-    FuzzyEntry eulersProof;
+    private FuzzyEntry eulersPhi;
+    private FuzzyEntry identity;
+    private FuzzyEntry communitivity;
+    private FuzzyEntry leplaceNote;
+    private FuzzyEntry factorNote;
+    private FuzzyEntry pumpingLemma;
+    private FuzzyEntry eulersTheorem;
+    private FuzzyEntry eulersProof;
+
+    @Rule
+    public ActivityTestRule mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @BeforeClass
     public void initClass() {
