@@ -92,28 +92,52 @@ public class FuzzySearcherTest {
     @Test
     public void testQueryItemsByNameOne() {
 	HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Euler's Theorem");
+	HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
+	mockSet.add(eulersTheorem);
+	this.assertEqual(returnSet, mockSet));
 
-	this.assertEqual(returnSet, new HashSet<FuzzyEntry>())
     }
 
     @Test
     public void testQueryItemsByNameMany() {
+	HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Euler");
+	HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
+	mockSet.add(eulersTheorem);
+	mockSet.add(eulersPhi);
+	mockSet.add(eulersProof);
+	this.assertEqual(returnSet, mockSet));
     }
 
     @Test
     public void testQueryItemsByNameAll() {
+	HashSet<FuzzyEntry> returnSet = applicationSearch.getAllFuzzyItems();
+	HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
+
+	mockSet.add(identity);
+	mockSet.add(commutivity);
+	mockSet.add(leplaceNote);
+	mockSet.add(factorNote);
+	mockSet.add(pumpingLemma);
+	mockSet.add(eulersTheorem);
+	mockSet.add(eulersPhi);
+	mockSet.add(eulersProof);
+
+	this.assertEqual(returnSet, mockSet));
     }
 
     @Test
     public void testQueryItemsByTagNone() {
+	// TODO: Implement
     }
 
     @Test
     public void testQueryItemsByTagOne() {
+	// TODO: Implement
     }
 
     @Test
     public void testQueryItemsByTagMany() {
+	// TODO: Implement
     }
     @Test
 
@@ -122,29 +146,36 @@ public class FuzzySearcherTest {
 
     @Test
     public void testQueryItemsByCategoryNone() {
+	// TODO: Implement
     }
 
     @Test
     public void testQueryItemsByCategorySome() {
+	// TODO: Implement
     }
 
     @Test
     public void testQueryItemsByCategoryMany() {
+	// TODO: Implement
     }
 
     @Test
     public void getAllItems() {
+	// TODO: Implement
     }
 
     @Test
     public void getAllItemsEmptyDatabase() {
+	// TODO: Implement
     }
 
     @Test
     public void getAllItemsMutable() {
+	// TODO: Implement
     }
 
     @Test
     public void getAllItemsMutableFromEmpty() {
+	// TODO: Implement
     }
 }
