@@ -48,12 +48,11 @@ public class FuzzySearcherTest {
     private FuzzyEntry pumpingLemma;
     private FuzzyEntry eulersTheorem;
     private FuzzyEntry eulersProof;
-<<<<<<< HEAD
+
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(MainActivity.class);
-=======
->>>>>>> 6ed38f300cebb4415ce90bee6827a4a163e160da
+
 
     @BeforeClass
     public void initClass() {
