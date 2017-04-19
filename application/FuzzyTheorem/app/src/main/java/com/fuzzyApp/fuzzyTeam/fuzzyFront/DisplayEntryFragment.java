@@ -29,6 +29,8 @@ public class DisplayEntryFragment extends Fragment {
         return view;
     }
 
+
+    /*
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)   {
         FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
@@ -41,6 +43,7 @@ public class DisplayEntryFragment extends Fragment {
             //TODO Add specific exception case and handle properly
         }
     }
+    */
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
         switch (entry.entryType()) {
