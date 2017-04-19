@@ -48,9 +48,12 @@ public class FuzzySearcherTest {
     private FuzzyEntry pumpingLemma;
     private FuzzyEntry eulersTheorem;
     private FuzzyEntry eulersProof;
+<<<<<<< HEAD
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(MainActivity.class);
+=======
+>>>>>>> 6ed38f300cebb4415ce90bee6827a4a163e160da
 
     @BeforeClass
     public void initClass() {
@@ -90,11 +93,9 @@ public class FuzzySearcherTest {
         eulersTheorem.setName("Euler's Theorem");
         eulersTheorem.save();
 
-        eulersProof = new Proof("Euler's Thoerem", "is blah.")
+        eulersProof = new Proof("Euler's Thoerem", "is blah.");
         eulersProof.setName("Euler's Theorem Proof");
         eulersProof.save();
-
-        setMockDatabase();
     }
 
     @Test
@@ -108,7 +109,7 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Euler's Theorem");
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
         mockSet.add(eulersTheorem);
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test
@@ -118,7 +119,7 @@ public class FuzzySearcherTest {
         mockSet.add(eulersTheorem);
         mockSet.add(eulersPhi);
         mockSet.add(eulersProof);
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test
@@ -127,7 +128,7 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
 
         mockSet.add(identity);
-        mockSet.add(commutivity);
+        mockSet.add(communitivity);
         mockSet.add(leplaceNote);
         mockSet.add(factorNote);
         mockSet.add(pumpingLemma);
@@ -135,7 +136,7 @@ public class FuzzySearcherTest {
         mockSet.add(eulersPhi);
         mockSet.add(eulersProof);
 
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test
