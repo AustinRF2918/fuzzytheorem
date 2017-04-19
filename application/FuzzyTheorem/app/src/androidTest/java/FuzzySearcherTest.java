@@ -37,42 +37,16 @@ public class FuzzySearcherTest {
     FuzzyTheorem applicationState;
     FuzzySearcher applicationSearch;
 
-    private void setMockDatabase() {
-        applicationState.clear();
-
-        FuzzyEntry eulersPhi = new Definition("\\phi{s}", "\\sum{d | n}{1}");
-        eulersPhi.setName("Euler's Phi Function");
-
-        FuzzyEntry identity = new Definition("Identity over an algebraic structure", "An element such that a * I = a.");
-        identity.setName("Identity Attribute Over Algebras");
-
-        FuzzyEntry communitivity = new Definition("Commutivity over an algebraic structure", "A * B = B * A where * is any algebraic operator.");
-        communitivity.setName("Identity Attribute Over Communitivity");
-
-        FuzzyEntry leplaceNote = new Other("Remember to always factor before running LePlace operations.");
-        leplaceNote.setName("LePlace note 1");
-
-        FuzzyEntry factorNote = new Other("Sometimes tis a good idea.");
-        factorNote.setName("Notes on factoring");
-
-        FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
-        pumpingLemma.setName("Pumping Lemma");
-
-        FuzzyEntry eulersTheorem = new Theorem("Given...", "blah");
-        eulersTheorem.setName("Euler's Theorem");
-
-        FuzzyEntry eulersProof = new Proof("Euler's Thoerem", "is blah.")
-        eulersProof.setName("Euler's Theorem Proof");
-
-        eulersPhi.save();
-        identity.save();
-        communitivity.save();
-        leplaceNote.save();
-        factorNote.save();
-        pumpingLemma.save();
-        eulersTheorem.save();
-        eulersProof.save();
-    }
+    // Mock fuzzy entries we will use for
+    // running our tests.
+    FuzzyEntry eulersPhi;
+    FuzzyEntry identity;
+    FuzzyEntry communitivity;
+    FuzzyEntry leplaceNote;
+    FuzzyEntry factorNote;
+    FuzzyEntry pumpingLemma;
+    FuzzyEntry eulersTheorem;
+    FuzzyEntry eulersProof;
 
     @BeforeClass
     public void initClass() {
@@ -82,6 +56,40 @@ public class FuzzySearcherTest {
 
     @Before
     public void init() {
+        applicationState.clear();
+
+        eulersPhi = new Definition("\\phi{s}", "\\sum{d | n}{1}");
+        eulersPhi.setName("Euler's Phi Function");
+        eulersPhi.save();
+
+        identity = new Definition("Identity over an algebraic structure", "An element such that a * I = a.");
+        identity.setName("Identity Attribute Over Algebras");
+        identity.save();
+
+        communitivity = new Definition("Commutivity over an algebraic structure", "A * B = B * A where * is any algebraic operator.");
+        communitivity.setName("Identity Attribute Over Communitivity");
+        communitivity.save();
+
+        leplaceNote = new Other("Remember to always factor before running LePlace operations.");
+        leplaceNote.setName("LePlace note 1");
+        leplaceNote.save();
+
+        factorNote = new Other("Sometimes tis a good idea.");
+        factorNote.setName("Notes on factoring");
+        factorNote.save();
+
+        pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
+        pumpingLemma.setName("Pumping Lemma");
+        pumpingLemma.save();
+
+        eulersTheorem = new Theorem("Given...", "blah");
+        eulersTheorem.setName("Euler's Theorem");
+        eulersTheorem.save();
+
+        eulersProof = new Proof("Euler's Thoerem", "is blah.")
+        eulersProof.setName("Euler's Theorem Proof");
+        eulersProof.save();
+
         setMockDatabase();
     }
 
@@ -89,7 +97,6 @@ public class FuzzySearcherTest {
     public void testQueryItemsByNameNone() {
         HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Does not exist");
         Assert.assertEquals(returnSet, new HashSet<FuzzyEntry>());
-
     }
 
     @Test
@@ -98,7 +105,6 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
         mockSet.add(eulersTheorem);
         Assert.assertEquals(returnSet, mockSet));
-
     }
 
     @Test
