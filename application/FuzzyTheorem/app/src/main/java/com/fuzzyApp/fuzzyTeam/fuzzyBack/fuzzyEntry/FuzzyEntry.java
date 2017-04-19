@@ -35,6 +35,15 @@ public abstract class FuzzyEntry extends SugarRecord {
         entryTags = tagList;
     }
 
+    @Override
+    public long save() {
+	if (entryName.equals("")) {
+	    throw new ValueException("FuzzyEntry's require names to be instantiated.");
+	}
+
+	super.save();
+    }
+
     /**
      * @param tag
      *
