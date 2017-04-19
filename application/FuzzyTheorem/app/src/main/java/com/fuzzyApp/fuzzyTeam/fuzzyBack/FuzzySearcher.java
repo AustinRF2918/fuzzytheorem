@@ -82,6 +82,9 @@ public class FuzzySearcher {
      * queries for items.
      */
     public HashSet<FuzzyEntry> filterByTags(ArrayList<String> tagList) {
+	// TODO: Perhaps make this a variable length function
+	// so we don't have to constantly pass in ArrayLists.
+
         HashSet<FuzzyEntry> filteredSet = new HashSet<FuzzyEntry>();
         HashSet<FuzzyEntry> superSet = getAllFuzzyItems();
 
