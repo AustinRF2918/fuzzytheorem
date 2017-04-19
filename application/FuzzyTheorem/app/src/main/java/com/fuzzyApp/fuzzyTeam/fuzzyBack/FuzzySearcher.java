@@ -62,6 +62,8 @@ public class FuzzySearcher {
         for (FuzzyEntry fuzzyEntry : superSet) {
             if (fuzzyEntry.getName().toLowerCase().contains(name.toLowerCase())) {
                 filteredSet.add(fuzzyEntry);
+
+
             }
         }
 
