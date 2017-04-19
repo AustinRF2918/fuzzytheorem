@@ -37,7 +37,7 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     @Override
     public long save() {
-	if (entryName.equals("")) {
+	if (entryName.equals("") || entryName == null) {
 	    throw new IllegalStateException("FuzzyEntry's require names to be instantiated.");
 	}
 

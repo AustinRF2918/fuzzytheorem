@@ -34,19 +34,19 @@ import java.util.HashSet;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class FuzzySearcherTest {
-    FuzzyTheorem applicationState;
-    FuzzySearcher applicationSearch;
+    private FuzzyTheorem applicationState;
+    private FuzzySearcher applicationSearch;
 
     // Mock fuzzy entries we will use for
     // running our tests.
-    FuzzyEntry eulersPhi;
-    FuzzyEntry identity;
-    FuzzyEntry communitivity;
-    FuzzyEntry leplaceNote;
-    FuzzyEntry factorNote;
-    FuzzyEntry pumpingLemma;
-    FuzzyEntry eulersTheorem;
-    FuzzyEntry eulersProof;
+    private FuzzyEntry eulersPhi;
+    private FuzzyEntry identity;
+    private FuzzyEntry communitivity;
+    private FuzzyEntry leplaceNote;
+    private FuzzyEntry factorNote;
+    private FuzzyEntry pumpingLemma;
+    private FuzzyEntry eulersTheorem;
+    private FuzzyEntry eulersProof;
 
     @BeforeClass
     public void initClass() {
@@ -86,11 +86,9 @@ public class FuzzySearcherTest {
         eulersTheorem.setName("Euler's Theorem");
         eulersTheorem.save();
 
-        eulersProof = new Proof("Euler's Thoerem", "is blah.")
+        eulersProof = new Proof("Euler's Thoerem", "is blah.");
         eulersProof.setName("Euler's Theorem Proof");
         eulersProof.save();
-
-        setMockDatabase();
     }
 
     @Test
@@ -104,7 +102,7 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Euler's Theorem");
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
         mockSet.add(eulersTheorem);
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test
@@ -114,7 +112,7 @@ public class FuzzySearcherTest {
         mockSet.add(eulersTheorem);
         mockSet.add(eulersPhi);
         mockSet.add(eulersProof);
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test
@@ -123,7 +121,7 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
 
         mockSet.add(identity);
-        mockSet.add(commutivity);
+        mockSet.add(communitivity);
         mockSet.add(leplaceNote);
         mockSet.add(factorNote);
         mockSet.add(pumpingLemma);
@@ -131,7 +129,7 @@ public class FuzzySearcherTest {
         mockSet.add(eulersPhi);
         mockSet.add(eulersProof);
 
-        Assert.assertEquals(returnSet, mockSet));
+        Assert.assertEquals(returnSet, mockSet);
     }
 
     @Test

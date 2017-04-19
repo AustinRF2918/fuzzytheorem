@@ -109,6 +109,13 @@ public class FuzzyEntryTest {
         myProof = new Proof("Why did the chicken cross the road?", "I don't know.");
         myDefinition = new Definition("J. Baugh", "A good professor.");
 
+        fermatsTheorem.setName("fermats theorem");
+        pumpingLemma.setName("pumping lemma");
+        other.setName("other");
+        myProof.setName("my proof");
+        myDefinition.setName("my definition");
+
+
         long fermatId = fermatsTheorem.save();
         long pumpingId = pumpingLemma.save();
         long otherId = other.save();
