@@ -12,13 +12,12 @@ import android.view.ViewGroup;
  */
 
 public class SearchEntryFragment extends Fragment {
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //saying what xml file were using
         View view = inflater.inflate(R.layout.search_entry_fragment, container, false);
 
         return view;
     }
-    public String getFragmentName(){
-        return "search";
-    }
+
 }

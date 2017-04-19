@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  */
 
 public class CreateEntryFragment extends Fragment {
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //saying what xml file were using
         View view = inflater.inflate(R.layout.create_entry_fragment, container, false);
@@ -19,7 +20,5 @@ public class CreateEntryFragment extends Fragment {
         return view;
     }
 
-    public String getFragmentName(){
-        return "create";
-    }
+
 }

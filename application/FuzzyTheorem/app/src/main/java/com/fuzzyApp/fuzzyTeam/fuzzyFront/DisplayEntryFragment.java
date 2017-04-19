@@ -6,19 +6,55 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 
 /**
  * Created by Dominic on 4/17/2017.
  */
 
 public class DisplayEntryFragment extends Fragment {
+    private RelativeLayout entry_fragment_placeholder = (RelativeLayout) getView().findViewById(R.id.entry_fragment_placeholder);
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //saying what xml file were using
         View view = inflater.inflate(R.layout.display_entry_fragment, container, false);
 
+
         return view;
     }
-    public String getFragmentName(){
-        return "display";
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        FuzzyEntry dummyEntry
     }
+
+    private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
+        switch (entry.entryType()) {
+            case "Lemma":
+
+                Button btn = new Button(getActivity());
+                btn.setText("Manual Add");
+                btn.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                entry_fragment_placeholder.addView(btn);
+                break;
+            case "Definition":
+                break;
+            case "Proof":
+                break;
+            case "Theorem":
+                break;
+            case "Other":
+                break;
+            default:
+                throw new Exception("Invalid FuzzyEntry type. Check FuzzyEntry.entryType()");
+
+        }
+    }
+
+
 }
