@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">FuzzyTheorem</string>
+
+
+    <string-array name="entry_type_array">
+        <item>Lemma</item>
+        <item>Definition</item>
+        <item>Proof</item>
+        <item>Theorem</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

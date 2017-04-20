@@ -49,7 +49,8 @@
         android:id="@+id/entry_type_Spinner"
         android:layout_below="@+id/add_tag_Button"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+        android:layout_marginTop="29dp"
+        android:entries="@array/entry_type_array"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
