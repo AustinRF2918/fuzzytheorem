@@ -11,6 +11,11 @@ public abstract class FuzzyEntry extends SugarRecord {
     private String entryDescription;
     private ArrayList<String> entryTags;
 
+    public FuzzyEntry() {
+        entryName = "";
+        entryDescription = "";
+    }
+
     public void setName(String name) {
         entryName = name;
     }
@@ -33,11 +38,6 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     public ArrayList<String> getTags() {
         return entryTags;
-    }
-
-    public FuzzyEntry() {
-        entryName = "";
-        entryDescription = "";
     }
 
     public boolean equals(Object other) {
@@ -75,12 +75,8 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     @Override
     public long save() {
-        if (entryName.equals("") || entryName == null) {
-            throw new IllegalStateException("FuzzyEntry's require names to be instantiated.");
-        }
-
-        if (entryDescription == null) {
-            entryDescription = "";
+        if (entryName.equals("")) {
+            throw new IllegalStateException("FuzzyEntry's require names to be nonempty.");
         }
 
         return super.save();
@@ -111,10 +107,9 @@ public abstract class FuzzyEntry extends SugarRecord {
      */
     public void clear() {
         clearChild();
-
         entryDescription = "";
         entryName = "";
-        entryTags = new ArrayList<>();
+        entryTags = null;
     }
 
     /**
