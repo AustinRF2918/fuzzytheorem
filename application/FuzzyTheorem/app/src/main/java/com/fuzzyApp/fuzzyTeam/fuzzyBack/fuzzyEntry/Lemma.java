@@ -11,7 +11,7 @@ public class Lemma extends FuzzyEntry {
     }
 
     public Lemma(String precondition, String postcondition) {
-        init();
+        super();
         this.precondition = precondition;
         this.postcondition = postcondition;
     }

@@ -11,7 +11,7 @@ public class Proof extends FuzzyEntry {
     }
 
     public Proof(String precondition, String postcondition) {
-        init();
+        super();
         this.statementName = precondition;
         this.content = postcondition;
     }

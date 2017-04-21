@@ -27,15 +27,15 @@ public abstract class FuzzyEntry extends SugarRecord {
         return entryDescription;
     }
 
-    public ArrayList<String> getTags() {
-        return entryTags;
-    }
-
     public void setTags(ArrayList<String> tagList) {
         entryTags = tagList;
     }
 
-    public void init() {
+    public ArrayList<String> getTags() {
+        return entryTags;
+    }
+
+    public FuzzyEntry() {
         entryName = "";
         entryDescription = "";
     }

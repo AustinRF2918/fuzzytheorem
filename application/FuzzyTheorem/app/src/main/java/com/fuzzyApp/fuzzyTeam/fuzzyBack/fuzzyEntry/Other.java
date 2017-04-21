@@ -10,7 +10,7 @@ public class Other extends FuzzyEntry {
     }
 
     public Other(String statement) {
-        init();
+        super();
         this.statement = statement;
     }
 
