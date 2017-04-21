@@ -41,7 +41,7 @@ public class FuzzySearcher {
         allList.addAll(proofList);
         allList.addAll(theoremList);
 
-        return new HashSet<FuzzyEntry>(allList);
+        return new HashSet<>(allList);
     }
 
     /**

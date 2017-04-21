@@ -7,14 +7,11 @@ public class Proof extends FuzzyEntry {
     private String statementName;
     private String content;
 
-    // TODO: Add relation String for rendering on frontend. Enumerator
-    // is too constrained: Just use string and handle it from frontend.
-
     public Proof() {
-
     }
 
     public Proof(String precondition, String postcondition) {
+        init();
         this.statementName = precondition;
         this.content = postcondition;
     }

@@ -35,20 +35,60 @@ public abstract class FuzzyEntry extends SugarRecord {
         entryTags = tagList;
     }
 
+    public void init() {
+        entryName = "";
+        entryDescription = "";
+    }
+
+    public boolean equals(Object other) {
+        boolean tagsEqual;
+
+        try {
+            tagsEqual = entryTags.equals(((FuzzyEntry) other).entryTags);
+        } catch (NullPointerException e) {
+            tagsEqual = true;
+        }
+
+        return (other instanceof FuzzyEntry)
+                && entryName.equals(((FuzzyEntry) other).entryName)
+                && entryDescription.equals(((FuzzyEntry) other).entryDescription)
+                && tagsEqual
+                && entryType().equals(((FuzzyEntry) other).entryType())
+                && getAttributeMapChild().equals(((FuzzyEntry) other).getAttributeMapChild());
+    }
+
+    public int hashCode() {
+        int tagsHash;
+
+        try {
+            tagsHash = entryTags.hashCode();
+        } catch (NullPointerException e) {
+            tagsHash = 0;
+        }
+
+        return entryName.hashCode()
+                + entryDescription.hashCode()
+                + tagsHash
+                + entryType().hashCode()
+                + getAttributeMapChild().hashCode();
+    }
+
     @Override
     public long save() {
-	if (entryName.equals("") || entryName == null) {
-	    throw new IllegalStateException("FuzzyEntry's require names to be instantiated.");
-	}
+        if (entryName.equals("") || entryName == null) {
+            throw new IllegalStateException("FuzzyEntry's require names to be instantiated.");
+        }
 
-	return super.save();
+        if (entryDescription == null) {
+            entryDescription = "";
+        }
+
+        return super.save();
     }
 
     /**
-     * @param tag
-     *
-     * Adds a tag to our FuzzyEntry. This allows for YouTube style
-     * searching and querying.
+     * @param tag Adds a tag to our FuzzyEntry. This allows for YouTube style
+     *            searching and querying.
      */
     public void addTag(String tag) {
         entryTags.add(tag);
@@ -56,9 +96,7 @@ public abstract class FuzzyEntry extends SugarRecord {
 
     /**
      * @param tag
-     * @return
-     *
-     * Checks for the existence of a tag in a FuzzyEntry. Useful
+     * @return Checks for the existence of a tag in a FuzzyEntry. Useful
      * for querying from the frontend during a search.
      */
     public boolean hasTag(String tag) {
@@ -83,7 +121,6 @@ public abstract class FuzzyEntry extends SugarRecord {
      * @param key
      * @return a boolean value representing the
      * existence of an attribute in a FuzzyEntry.
-     *
      */
     public boolean hasAttribute(String key) {
         if (key.equals("name") || key.equals("description")) {
@@ -98,11 +135,9 @@ public abstract class FuzzyEntry extends SugarRecord {
     /**
      * @param key
      * @return a string representing that key entry in a FuzzyEntry.
-     * @throws KeyException
-     *
-     * Resembles the SharedPreferences API. One difference is that
-     * this method will throw a KeyException in the case that said
-     * key is not found in our FuzzyEntry.
+     * @throws KeyException Resembles the SharedPreferences API. One difference is that
+     *                      this method will throw a KeyException in the case that said
+     *                      key is not found in our FuzzyEntry.
      */
     public String getString(String key) throws KeyException {
         if (key.equals("name")) {
@@ -117,12 +152,10 @@ public abstract class FuzzyEntry extends SugarRecord {
     /**
      * @param key
      * @param value
-     * @throws KeyException
-     *
-     * Attempts to pass a key to our FuzzyEntry. This is useful because it
-     * allows us to leverage dynamic dispatch across a FuzzyEntry object,
-     * assisting in querying from the front end. It is useful because otherwise
-     * we would have to maintain lists of different items.
+     * @throws KeyException Attempts to pass a key to our FuzzyEntry. This is useful because it
+     *                      allows us to leverage dynamic dispatch across a FuzzyEntry object,
+     *                      assisting in querying from the front end. It is useful because otherwise
+     *                      we would have to maintain lists of different items.
      */
     public void putString(String key, String value) throws KeyException {
         if (key.equals("name")) {
@@ -138,8 +171,12 @@ public abstract class FuzzyEntry extends SugarRecord {
     // of this abstract class to allow the API to work dynamically.
 
     abstract public String entryType();
+
     abstract void putStringChild(String key, String value) throws KeyException;
+
     abstract String getStringChild(String key) throws KeyException;
+
     abstract HashMap<String, String> getAttributeMapChild();
+
     abstract void clearChild();
 }

@@ -11,6 +11,7 @@ public class Definition extends FuzzyEntry {
     }
 
     public Definition(String symbolContent, String symbolReplacer) {
+        init();
         this.symbolContent = symbolContent;
         this.symbolReplacer = symbolReplacer;
     }

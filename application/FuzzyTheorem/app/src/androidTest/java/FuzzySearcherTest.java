@@ -2,6 +2,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 import android.widget.TabHost;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.FuzzySearcher;
@@ -55,13 +56,14 @@ public class FuzzySearcherTest {
 
 
     @BeforeClass
-    public void initClass() {
-        applicationState = new FuzzyTheorem();
-        applicationSearch = new FuzzySearcher();
+    public static void initClass() {
     }
 
     @Before
     public void init() {
+        applicationState = new FuzzyTheorem();
+        applicationSearch = new FuzzySearcher();
+
         applicationState.clear();
 
         eulersPhi = new Definition("\\phi{s}", "\\sum{d | n}{1}");
@@ -108,6 +110,7 @@ public class FuzzySearcherTest {
         HashSet<FuzzyEntry> returnSet = applicationSearch.filterByName("Euler's Theorem");
         HashSet<FuzzyEntry> mockSet = new HashSet<FuzzyEntry>();
         mockSet.add(eulersTheorem);
+        mockSet.add(eulersProof);
         Assert.assertEquals(returnSet, mockSet);
     }
 

@@ -7,13 +7,14 @@ public class Theorem extends FuzzyEntry {
     private String precondition;
     private String postcondition;
 
-    public Theorem(String precondition, String postcondition) {
-        this.precondition = precondition;
-        this.postcondition = postcondition;
-    }
-
     public Theorem() {
 
+    }
+
+    public Theorem(String precondition, String postcondition) {
+        init();
+        this.precondition = precondition;
+        this.postcondition = postcondition;
     }
 
     /**
