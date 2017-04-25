@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:flexWrap="wrap"
     app:alignItems="stretch"
@@ -23,7 +24,7 @@
 
     <EditText
         app:layout_flexBasisPercent="100%"
-        app:layout_flexGrow="100%"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -34,13 +35,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:hint="Entry Description" />
+    <!--app:layout_flexGrow="100%"-->
 
     <com.google.android.flexbox.FlexboxLayout
         android:minHeight="0dp"
         android:layout_marginEnd="13dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/create_placeholder"
+        android:id="@+id/display_placeholder"
         app:flexWrap="wrap"
         app:alignItems="stretch"
         app:layout_flexBasisPercent="100%"

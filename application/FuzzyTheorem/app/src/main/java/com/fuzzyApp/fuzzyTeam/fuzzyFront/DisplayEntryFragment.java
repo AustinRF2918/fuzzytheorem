@@ -15,16 +15,19 @@ import android.widget.TextView;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Lemma;
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fuzzyApp.fuzzyTeam.fuzzyFront.R.id.entry_fragment_placeholder;
 
 /**
  * Created by Dominic on 4/17/2017.
  */
 
 public class DisplayEntryFragment extends Fragment {
-    private RelativeLayout entry_fragment_placeholder = null;
+    private FlexboxLayout display_placeholder = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class DisplayEntryFragment extends Fragment {
     }
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
-        entry_fragment_placeholder = (RelativeLayout) getView().findViewById(R.id.entry_fragment_placeholder);
+        display_placeholder = (FlexboxLayout) getView().findViewById(R.id.display_placeholder);
         ArrayList<View> widgetList = new ArrayList();
 
 
@@ -42,35 +45,35 @@ public class DisplayEntryFragment extends Fragment {
                 widgetList = getLemmaWidgets();
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    entry_fragment_placeholder.addView(widget);
+                    display_placeholder.addView(widget);
                 }
                 break;
             case "Definition":
                 widgetList = getDefinitionWidgets();
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    entry_fragment_placeholder.addView(widget);
+                    display_placeholder.addView(widget);
                 }
                 break;
             case "Proof":
                 widgetList = getProofWidgets();
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    entry_fragment_placeholder.addView(widget);
+                    display_placeholder.addView(widget);
                 }
                 break;
             case "Theorem":
                 widgetList = getTheoremWidgets();
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    entry_fragment_placeholder.addView(widget);
+                    display_placeholder.addView(widget);
                 }
                 break;
             case "Other":
                 widgetList = getOtherWidgets();
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    entry_fragment_placeholder.addView(widget);
+                    display_placeholder.addView(widget);
                 }
                 break;
             default:
@@ -102,7 +105,6 @@ public class DisplayEntryFragment extends Fragment {
 
         return widgetList;
     }
-
 
     private ArrayList<View> getLemmaWidgets(){
         ArrayList<View> widgetList = new ArrayList();
@@ -167,7 +169,6 @@ public class DisplayEntryFragment extends Fragment {
 
         return widgetList;
     }
-
 
     private ArrayList<View> getOtherWidgets(){
         ArrayList<View> widgetList = new ArrayList();
