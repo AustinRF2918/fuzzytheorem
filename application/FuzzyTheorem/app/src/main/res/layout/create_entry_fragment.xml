@@ -64,7 +64,7 @@
     </com.google.android.flexbox.FlexboxLayout>
 
     <Spinner
-        android:minHeight="50dp"
+        android:minHeight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_flexBasisPercent="100%"
@@ -76,14 +76,15 @@
         android:layout_marginEnd="40dp"
         android:entries="@array/entry_type_array"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/entry_type_Spinner"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:id="@+id/entry_fragment_placeholder">
-
-    </RelativeLayout>
-
+    <com.google.android.flexbox.FlexboxLayout
+        android:minHeight="0dp"
+        android:layout_marginEnd="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_placeholder"
+        app:flexWrap="wrap"
+        app:alignItems="stretch"
+        app:layout_flexBasisPercent="100%"
+        app:alignContent="stretch">
+    </com.google.android.flexbox.FlexboxLayout>
 </com.google.android.flexbox.FlexboxLayout>
