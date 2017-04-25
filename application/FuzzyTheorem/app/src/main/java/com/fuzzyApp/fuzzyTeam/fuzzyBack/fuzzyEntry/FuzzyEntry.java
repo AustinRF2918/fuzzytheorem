@@ -24,7 +24,7 @@ public abstract class FuzzyEntry extends SugarRecord {
         return entryName;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         entryDescription = description;
     }
 
