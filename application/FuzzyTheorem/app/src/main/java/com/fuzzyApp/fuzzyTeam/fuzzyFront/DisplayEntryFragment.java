@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Lemma;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dominic on 4/17/2017.
@@ -46,6 +50,9 @@ public class DisplayEntryFragment extends Fragment {
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
         entry_fragment_placeholder = (RelativeLayout) getView().findViewById(R.id.entry_fragment_placeholder);
+        ArrayList<View> widgetList = new ArrayList();
+
+
         switch (entry.entryType()) {
             case "Lemma":
 
@@ -55,6 +62,7 @@ public class DisplayEntryFragment extends Fragment {
                 entry_fragment_placeholder.addView(btn);
                 break;
             case "Definition":
+                getDefinitionWidgets();
                 break;
             case "Proof":
                 break;
@@ -68,6 +76,30 @@ public class DisplayEntryFragment extends Fragment {
         }
     }
 
+
+
+    private ArrayList<View> getDefinitionWidgets(){
+        ArrayList<View> widgetList = new ArrayList();
+
+        EditText entryName = new EditText(getActivity());
+        entryName.setEnabled(false);
+
+        EditText entryDesc = new EditText(getActivity());
+        entryDesc.setEnabled(false);
+
+        
+
+
+
+
+
+
+        widgetList.add();
+
+
+
+        return
+    }
 
 
 }
