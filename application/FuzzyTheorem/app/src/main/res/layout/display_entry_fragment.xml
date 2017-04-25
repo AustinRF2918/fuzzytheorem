@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<com.google.android.flexbox.FlexboxLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:flexWrap="wrap"
+    app:alignItems="stretch"
+    app:alignContent="stretch">
 
-    <TextView
-        android:text="TextView"
+    <EditText
+        app:layout_flexBasisPercent="100%"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/entry_type_TextView"
-        android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginTop="21dp" />
-
-    <Button
-        android:text="Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/entry_type_TextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/edit_entry_Button" />
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/entry_fragment_placeholder"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/edit_entry_Button"
-        android:layout_alignParentStart="true">
-
-    </RelativeLayout>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:id="@+id/textView2"
+        android:inputType="textPersonName"
+        android:id="@+id/entry_title_EditText"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:hint="Entry Title" />
 
+    <EditText
+        app:layout_flexBasisPercent="100%"
+        app:layout_flexGrow="100%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/entry_description_EditText"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:hint="Entry Description" />
 
-</RelativeLayout>
+    <com.google.android.flexbox.FlexboxLayout
+        android:minHeight="0dp"
+        android:layout_marginEnd="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_placeholder"
+        app:flexWrap="wrap"
+        app:alignItems="stretch"
+        app:layout_flexBasisPercent="100%"
+        app:alignContent="stretch">
+    </com.google.android.flexbox.FlexboxLayout>
+</com.google.android.flexbox.FlexboxLayout>
