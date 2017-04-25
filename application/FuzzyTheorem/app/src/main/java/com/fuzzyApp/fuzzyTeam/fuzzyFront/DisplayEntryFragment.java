@@ -26,27 +26,9 @@ public class DisplayEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //saying what xml file were using
         View view = inflater.inflate(R.layout.display_entry_fragment, container, false);
-
         return view;
     }
-
-
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)   {
-        FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
-        pumpingLemma.setName("Pumping Lemma");
-
-        try{
-            renderFuzzyEntry(pumpingLemma);
-        }
-        catch (Exception e){
-            //TODO Add specific exception case and handle properly
-        }
-    }
-
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
         entry_fragment_placeholder = (RelativeLayout) getView().findViewById(R.id.entry_fragment_placeholder);
