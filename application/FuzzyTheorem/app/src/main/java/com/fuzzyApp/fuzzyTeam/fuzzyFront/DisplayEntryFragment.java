@@ -126,14 +126,14 @@ public class DisplayEntryFragment extends Fragment {
 
 
         TextView entrySymbolContent = new TextView(getActivity());
-        TextView symbolReplacer = new Button(getActivity());
+        TextView entrySymbolReplacer = new TextView(getActivity());
 
 
         // TODO: Poplate symbolcontent and symbolreplacer widgets with values from the FuzzyEntry
 
 
         widgetList.add(entrySymbolContent);
-        widgetList.add(symbolReplacer);
+        widgetList.add(entrySymbolReplacer);
 
         return widgetList;
     }

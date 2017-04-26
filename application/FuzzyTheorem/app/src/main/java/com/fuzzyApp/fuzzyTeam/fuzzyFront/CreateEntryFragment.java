@@ -7,8 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
+import com.google.android.flexbox.FlexboxLayout;
+
+import java.util.ArrayList;
 
 
 /**
@@ -16,14 +26,17 @@ import android.widget.Spinner;
  */
 
 public class CreateEntryFragment extends Fragment {
-    private RelativeLayout entry_fragment_placeholder = null;
+    private FlexboxLayout create_placeholder = null;
     private Spinner entry_type_spinner = null;
+    private Button add_tag_button = null;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //saying what xml file were using
         View view = inflater.inflate(R.layout.create_entry_fragment, container, false);
         entry_type_spinner = (Spinner) view.findViewById(R.id.entry_type_Spinner);
+        add_tag_button = (Button) view.findViewById(R.id.add_tag_Button);
 
         return view;
     }
@@ -34,13 +47,13 @@ public class CreateEntryFragment extends Fragment {
 
         entry_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)  {
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                String entryType = selectedItemView.toString();
-                try{
+                String entryType = entry_type_spinner.getSelectedItem().toString();
+                try {
                     renderCreateFuzzyEntryFragment(entryType);
-                }
-                catch (Exception e){
+                    //enable submit button once entryType is chosen
+                } catch (Exception e) {
                     //TODO Add specific exception case and handle properly
                 }
             }
@@ -53,33 +66,142 @@ public class CreateEntryFragment extends Fragment {
 
     }
 
+    //TEMP, MOVE TO REAL ONCLICK LISTERN
+    private void addButtonOnClick() {
+        EditText entryName = (EditText) getView().findViewById(R.id.entry_title_EditText);
+        EditText entryDesc = (EditText) getView().findViewById(R.id.entry_description_EditText);
+        ListView entryTags = (ListView) getView().findViewById(R.id.entry_tags_ListView);
+
+    }
+
 
     private void renderCreateFuzzyEntryFragment(String entryType) throws Exception {
-        entry_fragment_placeholder = (RelativeLayout) getView().findViewById(R.id.entry_fragment_placeholder);
+        create_placeholder = (FlexboxLayout) getView().findViewById(R.id.create_placeholder);
+        create_placeholder.removeAllViews();
+        ArrayList<View> widgetList = new ArrayList();
+
+        //given the type of FuzzyEntry, the remaining widgets associated with each type will be dynamically rendered
         switch (entryType) {
             case "Lemma":
-                //render Lemma entry fields
+                widgetList = getLemmaWidgets(entryType);
+                for (View widget : widgetList) {
+                    widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    create_placeholder.addView(widget);
+                }
                 break;
             case "Definition":
-                //render Definition entry fields
+                widgetList = getDefinitionWidgets(entryType);
+                for (View widget : widgetList) {
+                    widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    create_placeholder.addView(widget);
+                }
                 break;
             case "Proof":
-                //render Proof entry fields
+                widgetList = getProofWidgets(entryType);
+                for (View widget : widgetList) {
+                    widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    create_placeholder.addView(widget);
+                }
                 break;
             case "Theorem":
-                //render Theorem entry fields
+                widgetList = getTheoremWidgets(entryType);
+                for (View widget : widgetList) {
+                    widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    create_placeholder.addView(widget);
+                }
                 break;
             case "Other":
-                //render Other entry fields
+                widgetList = getOtherWidgets(entryType);
+                for (View widget : widgetList) {
+                    widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    create_placeholder.addView(widget);
+                }
                 break;
             default:
                 throw new Exception("Invalid FuzzyEntry type. Check FuzzyEntry.entryType()");
 
         }
+    }
 
-        }
+
+
+
+
+    private ArrayList<View> getDefinitionWidgets(String entryType){
+        ArrayList<View> widgetList = new ArrayList();
+        TextView entrySymbolContent = new TextView(getActivity());
+        TextView entrySymbolReplacer = new TextView(getActivity());
+
+        entrySymbolContent.setHint("Symbol Content");
+        entrySymbolReplacer.setHint("Symbol Replacer");
+
+
+        widgetList.add(entrySymbolContent);
+        widgetList.add(entrySymbolReplacer);
+
+        return widgetList;
+    }
+
+    private ArrayList<View> getLemmaWidgets(String entryType){
+        ArrayList<View> widgetList = new ArrayList();
+        EditText entryPreCondition = new EditText(getActivity());
+        EditText entryPostCondition = new EditText(getActivity());
+
+        entryPreCondition.setHint("Pre Condition");
+        entryPostCondition.setHint("Post Condition");
+
+
+        widgetList.add(entryPreCondition);
+        widgetList.add(entryPostCondition);
+
+        return widgetList;
+    }
+
+    private ArrayList<View> getProofWidgets(String entryType){
+        ArrayList<View> widgetList = new ArrayList();
+
+        EditText entryStatementName = new EditText(getActivity());
+        EditText entryContent = new EditText(getActivity());
+
+        entryStatementName.setHint("Statment Name");
+        entryContent.setHint("Content");
+
+
+        widgetList.add(entryStatementName);
+        widgetList.add(entryContent);
+
+        return widgetList;
+    }
+
+    private ArrayList<View> getTheoremWidgets(String entryType){
+        ArrayList<View> widgetList = new ArrayList();
+
+        EditText entryPreCondition = new EditText(getActivity());
+        EditText entryPostCondition = new EditText(getActivity());
+
+        entryPreCondition.setHint("Pre Condition");
+        entryPostCondition.setHint("Post Condition");
+
+
+
+        widgetList.add(entryPreCondition);
+        widgetList.add(entryPostCondition);
+
+        return widgetList;
+    }
+
+    private ArrayList<View> getOtherWidgets(String entryType){
+        ArrayList<View> widgetList = new ArrayList();
+
+
+        EditText entryStatement = new EditText(getActivity());
+
+        entryStatement.setHint("Entry Statement");
+
+        widgetList.add(entryStatement);
+
+        return widgetList;
+    }
+
 }
-
-
-
 
