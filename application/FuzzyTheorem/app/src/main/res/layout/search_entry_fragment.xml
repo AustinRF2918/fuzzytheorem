@@ -8,7 +8,7 @@
     <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
-        android:layout_height="200dp"
+        android:layout_height="260dp"
         app:flexWrap="wrap"
         app:alignItems="stretch"
         app:alignContent="stretch">
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/entry_title_EditText"
+            android:id="@+id/title_entry"
             android:layout_marginTop="14dp"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="13dp"
@@ -32,8 +32,8 @@
             android:layout_marginStart="13dp"
             app:layout_flexBasisPercent="38%"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/new_tag_EditText"
-            android:layout_alignEnd="@+id/entry_title_EditText"
+            android:layout_alignBottom="@+id/tag_list"
+            android:layout_alignEnd="@+id/title_entry"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="13dp" />
 
@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/new_tag_EditText"
+                android:id="@+id/tag_entry"
                 android:layout_marginTop="18dp"
-                android:layout_below="@+id/entry_title_EditText"
-                android:layout_toEndOf="@+id/entry_title_EditText"
+                android:layout_below="@+id/title_entry"
+                android:layout_toEndOf="@+id/title_entry"
                 android:hint="New Tag" />
 
             <Button
@@ -62,9 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
-                android:id="@+id/add_tag_Button"
-                android:layout_below="@+id/new_tag_EditText"
-                android:layout_alignStart="@+id/new_tag_EditText"
+                android:id="@+id/add_tag"
+                android:layout_below="@+id/tag_entry"
+                android:layout_alignStart="@+id/tag_entry"
                 android:layout_marginStart="34dp" />
         </com.google.android.flexbox.FlexboxLayout>
 
@@ -73,16 +73,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_flexBasisPercent="100%"
-            android:id="@+id/entry_type_Spinner"
-            android:layout_below="@+id/add_tag_Button"
+            android:id="@+id/type_selector"
+            android:layout_below="@+id/add_tag"
             android:layout_alignParentStart="true"
             android:layout_marginTop="29dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:entries="@array/entry_type_array"/>
+
     </com.google.android.flexbox.FlexboxLayout>
     <ListView
-        android:id="@+id/result_items"
+        android:id="@+id/result_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></ListView>
 </LinearLayout>
