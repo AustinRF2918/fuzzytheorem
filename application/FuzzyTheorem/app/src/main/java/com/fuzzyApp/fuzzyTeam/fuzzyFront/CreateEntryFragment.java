@@ -17,10 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.FuzzySearcher;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class CreateEntryFragment extends Fragment {
     private Spinner entry_type_spinner = null;
     private Button addTagButton;
     private TextView newTagInput;
+    private TextView nameInput;
     private ListView tagListView;
     private List<String> tagList;
     private ArrayAdapter<String> tagListAdapter;
@@ -53,8 +56,9 @@ public class CreateEntryFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         tagsEmpty = true;
-        tagListView = (ListView) getView().findViewById(R.id.tag_list_ListView);
         newTagInput = (TextView) getView().findViewById(R.id.new_tag_EditText);
+        nameInput = (TextView) getView().findViewById(R.id.title_entry);
+        tagListView = (ListView) getView().findViewById(R.id.tag_list_ListView);
         addTagButton = (Button) getView().findViewById(R.id.add_tag_Button);
         tagList = new LinkedList<>();
 
@@ -82,10 +86,6 @@ public class CreateEntryFragment extends Fragment {
             }
         });
     }
-
-
-
-
 
     @NonNull
     private View.OnClickListener addTag() {
@@ -275,5 +275,22 @@ public class CreateEntryFragment extends Fragment {
         return widgetList;
     }
 
+    private void createNewFuzzyEntry() {
+        String nameText = nameInput.getText().toString();
+        FuzzySearcher search = new FuzzySearcher();
+
+        if (nameText.equals("")) {
+            Toast.makeText(getActivity(), "The name of this item must be non-empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        HashSet<FuzzyEntry> hits = search.filterByName(nameText);
+
+        for (FuzzyEntry entry : hits) {
+            if (entry.getName().equals(nameText)) {
+                Toast.makeText(getActivity(), "an item with this name already exists!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
 }
 
