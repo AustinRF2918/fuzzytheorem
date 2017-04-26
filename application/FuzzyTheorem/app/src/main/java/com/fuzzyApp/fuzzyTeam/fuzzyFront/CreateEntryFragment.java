@@ -77,7 +77,7 @@ public class CreateEntryFragment extends Fragment {
 
     private void renderCreateFuzzyEntryFragment(String entryType) throws Exception {
         create_placeholder = (FlexboxLayout) getView().findViewById(R.id.create_placeholder);
-        create_placeholder.removeAllViews();
+        create_placeholder.removeAllViews(); //resets the placeholder so previous widgets are removed
         ArrayList<View> widgetList = new ArrayList();
 
         //given the type of FuzzyEntry, the remaining widgets associated with each type will be dynamically rendered
@@ -129,8 +129,8 @@ public class CreateEntryFragment extends Fragment {
 
     private ArrayList<View> getDefinitionWidgets(String entryType){
         ArrayList<View> widgetList = new ArrayList();
-        TextView entrySymbolContent = new TextView(getActivity());
-        TextView entrySymbolReplacer = new TextView(getActivity());
+        EditText entrySymbolContent = new EditText(getActivity());
+        EditText entrySymbolReplacer = new EditText(getActivity());
 
         entrySymbolContent.setHint("Symbol Content");
         entrySymbolReplacer.setHint("Symbol Replacer");
