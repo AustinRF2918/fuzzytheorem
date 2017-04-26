@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.FuzzySearcher;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Theorem;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -82,29 +86,36 @@ public class SearchEntryFragment extends Fragment {
 
         tagList = new LinkedList<>();
         resultList = new ArrayList<>();
+        FuzzyEntry x = new Theorem("Hello", "world");
+        resultList.add(x);
 
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
-        //noinspection unchecked
-        fuzzyItemAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
+        setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
 
-                TextView topPortion = (TextView) view.findViewById(android.R.id.text1);
-                TextView bottomPortion = (TextView) view.findViewById(android.R.id.text2);
-
-                topPortion.setText(resultList.get(position).getName());
-                bottomPortion.setText(resultList.get(position).getDescription());
-
-                return view;
-            }
-        };
+        });
 
         resultListView.setAdapter(fuzzyItemAdapter);
         addTagButton.setOnClickListener(addTag());
+
+        entryTitleInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                performSearch();
+            }
+        });
     }
 
     @NonNull
@@ -170,17 +181,28 @@ public class SearchEntryFragment extends Fragment {
 
     public void performSearch() {
         HashSet<FuzzyEntry> nameMatches = search.filterByName(entryTitleInput.getText().toString());
+        System.out.println(nameMatches);
+
         HashSet<FuzzyEntry> typeMatches = search.filterByCategory(typeSelector.getSelectedItem().toString());
+        System.out.println(typeMatches);
 
         HashSet<FuzzyEntry> intersection = new HashSet<FuzzyEntry>(nameMatches);
         intersection.retainAll(typeMatches);
 
         if (tagList.isEmpty()) {
-            HashSet<FuzzyEntry> tagMatches = search.filterByTags((ArrayList<String>) tagList);
+            ArrayList convertedTagList = new ArrayList<>();
+            convertedTagList.addAll(tagList);
+            HashSet<FuzzyEntry> tagMatches = search.filterByTags(convertedTagList);
+            System.out.println(tagMatches);
             intersection.retainAll(tagMatches);
         }
 
-        resultList = new ArrayList<>(intersection);
+        resultList.clear();
+
+        for (FuzzyEntry entry : resultList) {
+            resultList.add(entry);
+        }
+
         fuzzyItemAdapter.notifyDataSetChanged();
     }
 }
