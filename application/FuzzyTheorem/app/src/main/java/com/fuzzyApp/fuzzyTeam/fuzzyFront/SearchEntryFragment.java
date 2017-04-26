@@ -75,7 +75,10 @@ public class SearchEntryFragment extends Fragment {
         tagList = new LinkedList<>();
         resultList = new ArrayList<>();
 
-        tagListAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, tagList);
+        tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
+
+
+        tagListView.setAdapter(tagListAdapter);
 
         addTag.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -86,6 +89,13 @@ public class SearchEntryFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     public void refreshCurrentTags() {
