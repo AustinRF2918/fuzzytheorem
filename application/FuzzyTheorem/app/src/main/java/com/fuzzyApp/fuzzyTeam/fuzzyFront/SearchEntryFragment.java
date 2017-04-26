@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -76,9 +77,19 @@ public class SearchEntryFragment extends Fragment {
         resultList = new ArrayList<>();
 
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
-
-
         tagListView.setAdapter(tagListAdapter);
+
+        tagListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = tagList.get(position);
+                try {
+                    removeTag(item);
+                } catch (IllegalStateException e)  {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         addTag.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -89,7 +100,6 @@ public class SearchEntryFragment extends Fragment {
                 }
             }
         });
-
     }
 
     @Override
