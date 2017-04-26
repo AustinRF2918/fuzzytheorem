@@ -20,7 +20,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/title_entry"
-            android:layout_marginTop="14dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="13dp"
             android:layout_alignParentTop="true"
@@ -31,8 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_marginStart="13dp"
             app:layout_flexBasisPercent="38%"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_alignBottom="@+id/tag_list"
+            android:id="@+id/tag_list"
             android:layout_alignEnd="@+id/title_entry"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="13dp" />
@@ -78,6 +79,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="29dp"
             android:layout_marginStart="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginEnd="40dp"
             android:entries="@array/entry_type_array"/>
 
