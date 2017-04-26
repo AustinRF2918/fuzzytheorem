@@ -93,9 +93,6 @@ public class SearchEntryFragment extends Fragment {
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
-        setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
-
-        });
 
         resultListView.setAdapter(fuzzyItemAdapter);
         addTagButton.setOnClickListener(addTag());
