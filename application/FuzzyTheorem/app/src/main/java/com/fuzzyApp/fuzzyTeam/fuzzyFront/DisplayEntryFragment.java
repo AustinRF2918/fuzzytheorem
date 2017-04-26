@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.fuzzyApp.fuzzyTeam.fuzzyFront.R.id.entry_fragment_placeholder;
-
 /**
  * Created by Dominic on 4/17/2017.
  */
@@ -57,7 +55,6 @@ public class DisplayEntryFragment extends Fragment {
             //TODO Add specific exception case and handle properly
         }
     }
-
 
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
