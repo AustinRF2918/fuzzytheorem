@@ -47,7 +47,9 @@ public class SearchEntryFragment extends Fragment {
     private ArrayList<FuzzyEntry> resultList;
     private FuzzySearcher search;
 
+
     private ArrayAdapter<String> tagListAdapter;
+    private ArrayAdapter fuzzyItemAdapter;
 
     // Requerying on every search would SUCK performance-wise.
     float searchThreshold;
@@ -85,6 +87,23 @@ public class SearchEntryFragment extends Fragment {
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
+        //noinspection unchecked
+        fuzzyItemAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                TextView topPortion = (TextView) view.findViewById(android.R.id.text1);
+                TextView bottomPortion = (TextView) view.findViewById(android.R.id.text2);
+
+                topPortion.setText(resultList.get(position).getName());
+                bottomPortion.setText(resultList.get(position).getDescription());
+
+                return view;
+            }
+        };
+
+        resultListView.setAdapter(fuzzyItemAdapter);
         addTagButton.setOnClickListener(addTag());
     }
 
@@ -153,9 +172,15 @@ public class SearchEntryFragment extends Fragment {
         HashSet<FuzzyEntry> nameMatches = search.filterByName(entryTitleInput.getText().toString());
         HashSet<FuzzyEntry> typeMatches = search.filterByCategory(typeSelector.getSelectedItem().toString());
 
+        HashSet<FuzzyEntry> intersection = new HashSet<FuzzyEntry>(nameMatches);
+        intersection.retainAll(typeMatches);
+
         if (tagList.isEmpty()) {
             HashSet<FuzzyEntry> tagMatches = search.filterByTags((ArrayList<String>) tagList);
-        } else {
+            intersection.retainAll(tagMatches);
         }
+
+        resultList = new ArrayList<>(intersection);
+        fuzzyItemAdapter.notifyDataSetChanged();
     }
 }
