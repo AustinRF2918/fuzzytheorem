@@ -97,10 +97,6 @@ public class SearchEntryFragment extends Fragment {
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4edf1d48b7481b1490ad790809d5e545701f4858
 
         resultListAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1,  resultList){
             @Override
