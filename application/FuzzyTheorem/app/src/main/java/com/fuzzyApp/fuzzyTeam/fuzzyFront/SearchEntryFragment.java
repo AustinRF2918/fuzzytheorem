@@ -53,6 +53,8 @@ public class SearchEntryFragment extends Fragment {
 
 
     private ArrayAdapter<String> tagListAdapter;
+
+    private ArrayAdapter<FuzzyEntry> resultListAdapter; //Dominic
     private ArrayAdapter fuzzyItemAdapter;
 
     // Requerying on every search would SUCK performance-wise.
@@ -89,14 +91,40 @@ public class SearchEntryFragment extends Fragment {
         FuzzyEntry x = new Theorem("Hello", "world");
         resultList.add(x);
 
+
+
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
-        setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
 
-        });
 
+        resultListAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1,  resultList){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(resultList.get(position).getName());
+                text2.setText(resultList.get(position).getDescription());
+                return view;
+            }
+
+
+
+        }; //Dominic
+
+        resultListView.setAdapter(resultListAdapter);
+
+        //resultListView.setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
+
+        };
+
+
+
+
+    /*
         resultListView.setAdapter(fuzzyItemAdapter);
         addTagButton.setOnClickListener(addTag());
 
@@ -116,7 +144,11 @@ public class SearchEntryFragment extends Fragment {
                 performSearch();
             }
         });
+
+
     }
+
+    */
 
     @NonNull
     private View.OnClickListener addTag() {
