@@ -92,4 +92,5 @@ public class Definition extends FuzzyEntry {
     public String entryType() {
 	return "Definition";
     }
+
 }

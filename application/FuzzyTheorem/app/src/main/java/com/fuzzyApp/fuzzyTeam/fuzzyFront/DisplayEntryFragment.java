@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Definition;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Lemma;
 import com.google.android.flexbox.FlexboxLayout;
@@ -61,8 +62,9 @@ public class DisplayEntryFragment extends Fragment {
 
     private void renderFuzzyEntry(FuzzyEntry entry) throws Exception {
         display_placeholder = (FlexboxLayout) getView().findViewById(R.id.display_placeholder);
-        EditText entryName = (EditText) getView().findViewById(R.id.entry_title_EditText);
-        EditText entryDesc = (EditText) getView().findViewById(R.id.entry_description_EditText);
+        display_placeholder.removeAllViews(); //resets the placeholder so previous widgets are removed
+        TextView entryName = (TextView) getView().findViewById(R.id.entry_title_EditText);
+        TextView entryDesc = (TextView) getView().findViewById(R.id.entry_description_EditText);
         ListView entryTags = (ListView) getView().findViewById(R.id.entry_tags_ListView);
         ArrayList<View> widgetList = new ArrayList();
 
@@ -72,6 +74,7 @@ public class DisplayEntryFragment extends Fragment {
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, entry.getTags());
         entryTags.setAdapter(listAdapter);
 
+
         entryName.setFocusable(false);
         entryDesc.setFocusable(false);
         entryTags.setEnabled(false);
@@ -79,14 +82,14 @@ public class DisplayEntryFragment extends Fragment {
         //given the type of FuzzyEntry, the remaining widgets associated with each type will be dynamically rendered
         switch (entry.entryType()) {
             case "Lemma":
-                widgetList = getLemmaWidgets(entry);
+                widgetList = getLemmaWidgets((Lemma)entry);
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
                     display_placeholder.addView(widget);
                 }
                 break;
             case "Definition":
-                widgetList = getDefinitionWidgets(entry);
+                widgetList = getDefinitionWidgets((Definition)entry);
                 for (View widget : widgetList){
                     widget.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
                     display_placeholder.addView(widget);
@@ -121,13 +124,15 @@ public class DisplayEntryFragment extends Fragment {
 
 
 
-    private ArrayList<View> getDefinitionWidgets(FuzzyEntry entry){
+    private ArrayList<View> getDefinitionWidgets(FuzzyEntry entry) throws Exception{
         ArrayList<View> widgetList = new ArrayList();
 
 
         TextView entrySymbolContent = new TextView(getActivity());
         TextView entrySymbolReplacer = new TextView(getActivity());
 
+        entrySymbolContent.setText(entry.getString("symbolContent"));
+        entrySymbolReplacer.setText(entry.getString("symbolReplacer"));
 
         // TODO: Poplate symbolcontent and symbolreplacer widgets with values from the FuzzyEntry
 
@@ -138,11 +143,14 @@ public class DisplayEntryFragment extends Fragment {
         return widgetList;
     }
 
-    private ArrayList<View> getLemmaWidgets(FuzzyEntry entry){
+    private ArrayList<View> getLemmaWidgets(FuzzyEntry entry) throws Exception{
         ArrayList<View> widgetList = new ArrayList();
-        EditText entryPreCondition = new EditText(getActivity());
-        EditText entryPostCondition = new EditText(getActivity());
+        TextView entryPreCondition = new TextView(getActivity());
+        TextView entryPostCondition = new TextView(getActivity());
 
+
+        entryPreCondition.setText(entry.getString("precondition"));
+        entryPostCondition.setText(entry.getString("postcondition"));
 
         // TODO: Poplate precondition and postcondition widgets with values from the FuzzyEntry
 
@@ -153,13 +161,14 @@ public class DisplayEntryFragment extends Fragment {
         return widgetList;
     }
 
-    private ArrayList<View> getProofWidgets(FuzzyEntry entry){
+    private ArrayList<View> getProofWidgets(FuzzyEntry entry) throws Exception{
         ArrayList<View> widgetList = new ArrayList();
 
-        EditText entryStatementName = new EditText(getActivity());
-        EditText entryContent = new EditText(getActivity());
+        TextView entryStatementName = new TextView(getActivity());
+        TextView entryContent = new TextView(getActivity());
 
-        // TODO: Poplate precondition and postcondition widgets with values from the FuzzyEntry
+        entryStatementName.setText(entry.getString("statementName"));
+        entryContent.setText(entry.getString("content"));
 
 
         widgetList.add(entryStatementName);
@@ -168,14 +177,15 @@ public class DisplayEntryFragment extends Fragment {
         return widgetList;
     }
 
-    private ArrayList<View> getTheoremWidgets(FuzzyEntry entry){
+    private ArrayList<View> getTheoremWidgets(FuzzyEntry entry) throws Exception{
         ArrayList<View> widgetList = new ArrayList();
 
-        EditText entryPreCondition = new EditText(getActivity());
-        EditText entryPostCondition = new EditText(getActivity());
+        TextView entryPreCondition = new TextView(getActivity());
+        TextView entryPostCondition = new TextView(getActivity());
 
 
-        // TODO: Poplate precondition and postcondition widgets with values from the FuzzyEntry
+        entryPreCondition.setText(entry.getString("precondition"));
+        entryPostCondition.setText(entry.getString("postcondition"));
 
         widgetList.add(entryPreCondition);
         widgetList.add(entryPostCondition);
@@ -183,13 +193,13 @@ public class DisplayEntryFragment extends Fragment {
         return widgetList;
     }
 
-    private ArrayList<View> getOtherWidgets(FuzzyEntry entry){
+    private ArrayList<View> getOtherWidgets(FuzzyEntry entry) throws Exception{
         ArrayList<View> widgetList = new ArrayList();
 
 
-        EditText entryStatement = new EditText(getActivity());
+        TextView entryStatement = new TextView(getActivity());
 
-        // TODO: Poplate entryStatment widget with values from the FuzzyEntry
+        entryStatement.setText(entry.getString("statement"));
 
         widgetList.add(entryStatement);
 
