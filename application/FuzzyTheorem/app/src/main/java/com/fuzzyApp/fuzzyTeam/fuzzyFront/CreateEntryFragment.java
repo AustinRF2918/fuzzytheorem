@@ -1,6 +1,7 @@
 package com.fuzzyApp.fuzzyTeam.fuzzyFront;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,11 +15,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -29,27 +32,36 @@ import java.util.List;
 public class CreateEntryFragment extends Fragment {
     private FlexboxLayout create_placeholder = null;
     private Spinner entry_type_spinner = null;
-    private Button add_tag_button = null;
-    private ListView tag_list_ListView = null;
-    ArrayList<String> tags_list = new ArrayList<String>();
-    ArrayAdapter<String> tags_array_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, tags_list);
-
+    private Button addTagButton;
+    private TextView newTagInput;
+    private ListView tagListView;
+    private List<String> tagList;
+    private ArrayAdapter<String> tagListAdapter;
+    boolean tagsEmpty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //saying what xml file were using
         View view = inflater.inflate(R.layout.create_entry_fragment, container, false);
         entry_type_spinner = (Spinner) view.findViewById(R.id.entry_type_Spinner);
-        add_tag_button = (Button) view.findViewById(R.id.add_tag_Button);
-        tag_list_ListView = (ListView) view.findViewById(R.id.tag_list_ListView);
-        tag_list_ListView.setAdapter(tags_array_adapter);
+
 
         return view;
     }
 
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        tagsEmpty = true;
+        tagListView = (ListView) getView().findViewById(R.id.tag_list_ListView);
+        newTagInput = (TextView) getView().findViewById(R.id.new_tag_EditText);
+        addTagButton = (Button) getView().findViewById(R.id.add_tag_Button);
+        tagList = new LinkedList<>();
+
+        tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
+        tagListView.setAdapter(tagListAdapter);
+        tagListView.setOnItemClickListener(removeTag());
+        addTagButton.setOnClickListener(addTag());
 
         entry_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -69,21 +81,73 @@ public class CreateEntryFragment extends Fragment {
 
             }
         });
-
-        add_tag_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tags_list.add("hello");
-            }
-        });
     }
 
-    //TEMP, MOVE TO REAL ONCLICK LISTERN
-    private void addButtonOnClick() {
-        EditText entryName = (EditText) getView().findViewById(R.id.entry_title_EditText);
-        EditText entryDesc = (EditText) getView().findViewById(R.id.entry_description_EditText);
-        ListView entryTags = (ListView) getView().findViewById(R.id.entry_tags_ListView);
 
+
+
+
+    @NonNull
+    private View.OnClickListener addTag() {
+        return new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    addNewTag();
+                } catch (IllegalStateException e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    }
+
+    @NonNull
+    private AdapterView.OnItemClickListener removeTag() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = tagList.get(position);
+                try {
+                    removeTag(item);
+                } catch (IllegalStateException e)  {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+
+    public void addNewTag() throws IllegalStateException {
+        String currentTag = newTagInput.getText().toString();
+
+        if (currentTag.equals("")) {
+            throw new IllegalStateException("Current tag must be nonempty.");
+        }
+
+        for (String tag : tagList) {
+            if (currentTag.equals(tag)) {
+                throw new IllegalStateException("Current tag must be unique to tags already entered.");
+            }
+        }
+
+        tagList.add(currentTag);
+        tagListAdapter.notifyDataSetChanged();
+    }
+
+    public void removeTag(String tag) throws  IllegalStateException {
+        boolean result = tagList.remove(tag);
+
+        if (result) {
+            tagListAdapter.notifyDataSetChanged();
+        } else {
+            throw new IllegalStateException("Tag passed to removeTag does not exist.");
+        }
     }
 
 
@@ -134,10 +198,6 @@ public class CreateEntryFragment extends Fragment {
 
         }
     }
-
-
-
-
 
     private ArrayList<View> getDefinitionWidgets(String entryType){
         ArrayList<View> widgetList = new ArrayList();
