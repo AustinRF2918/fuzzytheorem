@@ -19,6 +19,7 @@ import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,6 +30,9 @@ public class CreateEntryFragment extends Fragment {
     private FlexboxLayout create_placeholder = null;
     private Spinner entry_type_spinner = null;
     private Button add_tag_button = null;
+    private ListView tag_list_ListView = null;
+    ArrayList<String> tags_list = new ArrayList<String>();
+    ArrayAdapter<String> tags_array_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, tags_list);
 
 
     @Override
@@ -37,6 +41,8 @@ public class CreateEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.create_entry_fragment, container, false);
         entry_type_spinner = (Spinner) view.findViewById(R.id.entry_type_Spinner);
         add_tag_button = (Button) view.findViewById(R.id.add_tag_Button);
+        tag_list_ListView = (ListView) view.findViewById(R.id.tag_list_ListView);
+        tag_list_ListView.setAdapter(tags_array_adapter);
 
         return view;
     }
@@ -64,6 +70,12 @@ public class CreateEntryFragment extends Fragment {
             }
         });
 
+        add_tag_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tags_list.add("hello");
+            }
+        });
     }
 
     //TEMP, MOVE TO REAL ONCLICK LISTERN
