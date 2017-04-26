@@ -54,7 +54,7 @@ public class SearchEntryFragment extends Fragment {
 
     private ArrayAdapter<String> tagListAdapter;
 
-    private ArrayAdapter<FuzzyEntry> resultListAdapter; //Dominic
+    private ArrayAdapter<FuzzyEntry> resultListAdapter;
     private ArrayAdapter fuzzyItemAdapter;
 
     // Requerying on every search would SUCK performance-wise.
@@ -89,6 +89,8 @@ public class SearchEntryFragment extends Fragment {
         tagList = new LinkedList<>();
         resultList = new ArrayList<>();
         FuzzyEntry x = new Theorem("Hello", "world");
+        x.setName("This is the name");
+        x.setDescription("This is the Desc");
         resultList.add(x);
 
 
@@ -98,6 +100,7 @@ public class SearchEntryFragment extends Fragment {
         tagListView.setOnItemClickListener(removeTag());
 
 
+        //This Adapter renders FuzzyEntry objects Names and Descriptions in the resultListView.
         resultListAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1,  resultList){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
@@ -109,15 +112,10 @@ public class SearchEntryFragment extends Fragment {
                 text2.setText(resultList.get(position).getDescription());
                 return view;
             }
-
-
-
-        }; //Dominic
-
+        };
         resultListView.setAdapter(resultListAdapter);
 
         //resultListView.setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
-
         };
 
 

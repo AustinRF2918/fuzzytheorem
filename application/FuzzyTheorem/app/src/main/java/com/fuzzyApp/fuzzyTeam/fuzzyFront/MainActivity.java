@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
         FuzzyTheorem applicationState = new FuzzyTheorem();
         FuzzySearcher applicationSearch = new FuzzySearcher();
 
+
         applicationState.clear();
 
         FuzzyEntry eulersPhi = new Definition("\\phi{s}", "\\sum{d | n}{1}");
