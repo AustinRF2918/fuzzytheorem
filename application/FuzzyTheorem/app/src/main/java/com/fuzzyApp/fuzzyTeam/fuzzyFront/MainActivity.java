@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity{
                 case "Search":
                     newMainFragment = new SearchEntryFragment();
                     break;
-                case "Display":
-                    newMainFragment = new DisplayEntryFragment();
-                    break;
                 //TODO safely remove the display option from this method as well as the actual menu
             }
         }

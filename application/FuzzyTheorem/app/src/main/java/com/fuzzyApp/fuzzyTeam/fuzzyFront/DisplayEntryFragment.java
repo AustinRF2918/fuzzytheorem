@@ -42,18 +42,18 @@ public class DisplayEntryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)   {
 
-        /*
+
         FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
         pumpingLemma.setName("Pumping Lemma");
         pumpingLemma.setDescription("dummy description");
         ArrayList<String> dummyTags = new ArrayList<>(Arrays.asList("tag1", "tag2", "tag3"));
         pumpingLemma.setTags(dummyTags);
-*/
+
 
 
         try{
             // AUSTIN GET FuzzyEntry OBJECT HERE
-            renderFuzzyEntry(//Give me the fuzzyEntry);
+            renderFuzzyEntry(pumpingLemma);
         }
         catch (Exception e){
             //TODO Add specific exception case and handle properly
