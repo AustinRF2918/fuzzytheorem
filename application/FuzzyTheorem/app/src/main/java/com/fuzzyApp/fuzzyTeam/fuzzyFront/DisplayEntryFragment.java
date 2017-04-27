@@ -52,8 +52,8 @@ public class DisplayEntryFragment extends Fragment {
 
 
         try{
-
-            renderFuzzyEntry(fuzzyEntry);
+            // AUSTIN GET FuzzyEntry OBJECT HERE
+            renderFuzzyEntry(//Give me the fuzzyEntry);
         }
         catch (Exception e){
             //TODO Add specific exception case and handle properly

@@ -20,7 +20,7 @@ import com.orm.SugarContext;
 
 public class MainActivity extends AppCompatActivity{
     Fragment newMainFragment;   //newFragment is the next fragment that is going to be placed over the main activity
-
+    FuzzyEntry displayedEntry;
     FragmentTransaction transaction;
 
     private void generateSugarTables() {
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity{
         SugarContext.init(this);
         generateSugarTables();
         setContentView(R.layout.activity_main);
-
         replaceMainFragment("Search");
     }
 
@@ -92,4 +91,11 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    public FuzzyEntry getDisplayedEntry(){
+        return displayedEntry;
+    }
+
+    public void setDisplayedEntry(FuzzyEntry entry){
+
+    }
 }

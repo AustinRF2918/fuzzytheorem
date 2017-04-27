@@ -185,6 +185,8 @@ public class SearchEntryFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FuzzyEntry entry = resultList.get(position);
                 try {
+
+                    // AUSTIN SET FuzzyEntry OBJECT HERE
                     newMainFragment = new DisplayEntryFragment();
                     transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.activity_main, newMainFragment);
