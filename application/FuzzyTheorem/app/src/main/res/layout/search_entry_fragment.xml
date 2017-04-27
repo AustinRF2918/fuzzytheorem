@@ -29,7 +29,6 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_marginStart="13dp"
             app:layout_flexBasisPercent="38%"
             android:layout_height="100dp"
             android:layout_alignBottom="@+id/tag_list"
@@ -44,7 +43,7 @@
             android:layout_height="wrap_content"
             app:flexWrap="wrap"
             app:alignItems="stretch"
-            app:layout_flexBasisPercent="50%"
+            app:layout_flexBasisPercent="40%"
             app:alignContent="stretch">
 
             <EditText
