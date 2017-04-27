@@ -57,11 +57,8 @@ public class CreateEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.create_entry_fragment, container, false);
         entry_type_spinner = (Spinner) view.findViewById(R.id.entry_type_Spinner);
 
-
         return view;
     }
-
-
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         tagsEmpty = true;
@@ -71,7 +68,6 @@ public class CreateEntryFragment extends Fragment {
         tagListView = (ListView) getView().findViewById(R.id.tag_list_ListView);
         addTagButton = (Button) getView().findViewById(R.id.add_tag_Button);
         submitEntryButton = (Button) getView().findViewById(R.id.submit_entry_Button);
-
 
         tagList = new LinkedList<>();
 
@@ -414,7 +410,15 @@ public class CreateEntryFragment extends Fragment {
                 throw new Exception("Invalid FuzzyEntry type. Check FuzzyEntry.entryType()");
 
         }
+
         newEntry.save();
+
+        nameInput.setText("");
+        descInput.setText("");
+        dynamicInput1.setText("");
+        dynamicInput2.setText("");
+
+        Toast.makeText(getActivity(), "Successfully created Fuzzy Theorem entry!", Toast.LENGTH_LONG).show();
     }
 }
 
