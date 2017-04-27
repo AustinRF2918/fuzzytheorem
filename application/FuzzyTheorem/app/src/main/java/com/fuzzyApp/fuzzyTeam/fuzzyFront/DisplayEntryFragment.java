@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.FuzzySearcher;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Definition;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Lemma;
@@ -22,6 +23,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -50,13 +52,22 @@ public class DisplayEntryFragment extends Fragment {
         pumpingLemma.setTags(dummyTags);
 */
 
-
         try{
-            // AUSTIN GET FuzzyEntry OBJECT HERE
-            renderFuzzyEntry(//Give me the fuzzyEntry);
+            Bundle bundle = this.getArguments();
+            String queryName = bundle.getString("item_name");
+
+            FuzzySearcher fuzzySearcher = new FuzzySearcher();
+
+            HashSet<FuzzyEntry> results = fuzzySearcher.filterByName(queryName);
+
+            for (FuzzyEntry entry : results) {
+                if (entry.getName().equals(queryName)) {
+                    renderFuzzyEntry(entry);
+                }
+            }
         }
         catch (Exception e){
-            //TODO Add specific exception case and handle properly
+            System.out.println(e.getMessage());
         }
     }
 
@@ -66,19 +77,16 @@ public class DisplayEntryFragment extends Fragment {
         display_placeholder.removeAllViews(); //resets the placeholder so previous widgets are removed
         TextView entryName = (TextView) getView().findViewById(R.id.entry_title_EditText);
         TextView entryDesc = (TextView) getView().findViewById(R.id.entry_description_EditText);
-        ListView entryTags = (ListView) getView().findViewById(R.id.entry_tags_ListView);
         ArrayList<View> widgetList = new ArrayList();
 
         //update the name, description, and tags widgets with data from the FuzzyEntry
         entryName.setText(entry.getName());
         entryDesc.setText(entry.getDescription());
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, entry.getTags());
-        entryTags.setAdapter(listAdapter);
 
 
         entryName.setFocusable(false);
         entryDesc.setFocusable(false);
-        entryTags.setEnabled(false);
 
         //given the type of FuzzyEntry, the remaining widgets associated with each type will be dynamically rendered
         switch (entry.entryType()) {

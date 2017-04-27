@@ -188,12 +188,14 @@ public class SearchEntryFragment extends Fragment {
 
                     // AUSTIN SET FuzzyEntry OBJECT HERE
                     newMainFragment = new DisplayEntryFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item_name", entry.getName());
+                    newMainFragment.setArguments(bundle);
                     transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.activity_main, newMainFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 } catch (IllegalStateException e)  {
-                    //TODO implent excpetion handler for being unable to pass FuzzyEntry to disply fragment
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
