@@ -128,6 +128,8 @@ public class CreateEntryFragment extends Fragment {
                     createNewFuzzyEntry();
                 } catch (IllegalStateException e) {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };

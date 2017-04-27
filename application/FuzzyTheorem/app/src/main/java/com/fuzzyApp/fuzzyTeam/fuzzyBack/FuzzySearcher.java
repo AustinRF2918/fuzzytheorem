@@ -92,7 +92,7 @@ public class FuzzySearcher {
             boolean entryState = true;
 
             for (String tag : tagList) {
-                if (!fuzzyEntry.getTags().contains(tag)) {
+                if (fuzzyEntry.getTags() == null || !fuzzyEntry.getTags().contains(tag)) {
                     entryState = false;
                 }
             }

@@ -39,44 +39,6 @@ public class MainActivity extends AppCompatActivity{
         generateSugarTables();
         setContentView(R.layout.activity_main);
 
-        FuzzyTheorem applicationState = new FuzzyTheorem();
-        FuzzySearcher applicationSearch = new FuzzySearcher();
-
-
-        applicationState.clear();
-
-        FuzzyEntry eulersPhi = new Definition("\\phi{s}", "\\sum{d | n}{1}");
-        eulersPhi.setName("Euler's Phi Function");
-        eulersPhi.save();
-
-        FuzzyEntry identity = new Definition("Identity over an algebraic structure", "An element such that a * I = a.");
-        identity.setName("Identity Attribute Over Algebras");
-        identity.save();
-
-        FuzzyEntry communitivity = new Definition("Commutivity over an algebraic structure", "A * B = B * A where * is any algebraic operator.");
-        communitivity.setName("Identity Attribute Over Communitivity");
-        communitivity.save();
-
-        FuzzyEntry leplaceNote = new Other("Remember to always factor before running LePlace operations.");
-        leplaceNote.setName("LePlace note 1");
-        leplaceNote.save();
-
-        FuzzyEntry factorNote = new Other("Sometimes tis a good idea.");
-        factorNote.setName("Notes on factoring");
-        factorNote.save();
-
-        FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
-        pumpingLemma.setName("Pumping Lemma");
-        pumpingLemma.save();
-
-        FuzzyEntry eulersTheorem = new Theorem("Given...", "blah");
-        eulersTheorem.setName("Euler's Theorem");
-        eulersTheorem.save();
-
-        FuzzyEntry eulersProof = new Proof("Euler's Thoerem", "is blah.");
-        eulersProof.setName("Euler's Theorem Proof");
-        eulersProof.save();
-
         replaceMainFragment("Search");
     }
 
