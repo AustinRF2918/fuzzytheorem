@@ -308,10 +308,3 @@
     string into the MathView that our IFuzzyEntry has and it will automatically render the Latex. This
     means that my IFuzzyEntry will have a method called getContent, which will return the latex that our
     item has.
-
-*** Integration Of Application
-    Finally we would have a settings and a about page, which would be easy to make and accessible from the
-    menu. This is to ensure that Baugh will give us full credit because he said we need multiple activities.
-    Even though fragments are basically activities, want to be safe. After this point, all that must be
-    done is integration of the app similar to project 2. I would suggest viewing your implementation of that
-    so you can just copy and paste your fragments.
