@@ -65,7 +65,6 @@ public class DisplayEntryFragment extends Fragment {
                     renderFuzzyEntry(entry);
                 }
             }
-            renderFuzzyEntry(pumpingLemma);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
