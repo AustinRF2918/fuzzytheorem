@@ -18,7 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.FuzzySearcher;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Definition;
 import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.FuzzyEntry;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Lemma;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Other;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Proof;
+import com.fuzzyApp.fuzzyTeam.fuzzyBack.fuzzyEntry.Theorem;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
@@ -35,8 +40,12 @@ public class CreateEntryFragment extends Fragment {
     private FlexboxLayout create_placeholder = null;
     private Spinner entry_type_spinner = null;
     private Button addTagButton;
+    private Button submitEntryButton;
     private TextView newTagInput;
     private TextView nameInput;
+    private TextView dynamicInput1;
+    private TextView dynamicInput2;
+    private TextView descInput;
     private ListView tagListView;
     private List<String> tagList;
     private ArrayAdapter<String> tagListAdapter;
@@ -57,15 +66,26 @@ public class CreateEntryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         tagsEmpty = true;
         newTagInput = (TextView) getView().findViewById(R.id.new_tag_EditText);
-        nameInput = (TextView) getView().findViewById(R.id.title_entry);
+        nameInput = (TextView) getView().findViewById(R.id.entry_title_EditText);
+        descInput = (TextView) getView().findViewById(R.id.entry_description_EditText);
         tagListView = (ListView) getView().findViewById(R.id.tag_list_ListView);
         addTagButton = (Button) getView().findViewById(R.id.add_tag_Button);
+        submitEntryButton = (Button) getView().findViewById(R.id.submit_entry_Button);
+
+
         tagList = new LinkedList<>();
 
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
         addTagButton.setOnClickListener(addTag());
+
+        try {
+            submitEntryButton.setOnClickListener(submitEntry());
+        }
+        catch (Exception e){
+            //TODO Add specific exception case and handle properly
+        }
 
         entry_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -99,6 +119,20 @@ public class CreateEntryFragment extends Fragment {
             }
         };
     }
+
+    @NonNull
+    private View.OnClickListener submitEntry()  {
+        return new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    createNewFuzzyEntry();
+                } catch (IllegalStateException e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    }
+
 
     @NonNull
     private AdapterView.OnItemClickListener removeTag() {
@@ -197,6 +231,8 @@ public class CreateEntryFragment extends Fragment {
                 throw new Exception("Invalid FuzzyEntry type. Check FuzzyEntry.entryType()");
 
         }
+        dynamicInput1 = (TextView) getView().findViewById(R.id.dynamicView1);
+        dynamicInput2 = (TextView) getView().findViewById(R.id.dynamicView2);
     }
 
     private ArrayList<View> getDefinitionWidgets(String entryType){
@@ -207,6 +243,8 @@ public class CreateEntryFragment extends Fragment {
         entrySymbolContent.setHint("Symbol Content");
         entrySymbolReplacer.setHint("Symbol Replacer");
 
+        entrySymbolContent.setId(R.id.dynamicView1);
+        entrySymbolReplacer.setId(R.id.dynamicView2);
 
         widgetList.add(entrySymbolContent);
         widgetList.add(entrySymbolReplacer);
@@ -222,6 +260,8 @@ public class CreateEntryFragment extends Fragment {
         entryPreCondition.setHint("Pre Condition");
         entryPostCondition.setHint("Post Condition");
 
+        entryPreCondition.setId(R.id.dynamicView1);
+        entryPostCondition.setId(R.id.dynamicView2);
 
         widgetList.add(entryPreCondition);
         widgetList.add(entryPostCondition);
@@ -237,6 +277,10 @@ public class CreateEntryFragment extends Fragment {
 
         entryStatementName.setHint("Statment Name");
         entryContent.setHint("Content");
+
+        entryStatementName.setId(R.id.dynamicView1);
+        entryContent.setId(R.id.dynamicView2);
+
 
 
         widgetList.add(entryStatementName);
@@ -254,6 +298,8 @@ public class CreateEntryFragment extends Fragment {
         entryPreCondition.setHint("Pre Condition");
         entryPostCondition.setHint("Post Condition");
 
+        entryPreCondition.setId(R.id.dynamicView1);
+        entryPostCondition.setId(R.id.dynamicView2);
 
 
         widgetList.add(entryPreCondition);
@@ -268,19 +314,47 @@ public class CreateEntryFragment extends Fragment {
 
         EditText entryStatement = new EditText(getActivity());
 
+        entryStatement.setId(R.id.dynamicView1);
+
+
         entryStatement.setHint("Entry Statement");
+
+
 
         widgetList.add(entryStatement);
 
         return widgetList;
     }
 
-    private void createNewFuzzyEntry() {
+    private void createNewFuzzyEntry() throws Exception{
         String nameText = nameInput.getText().toString();
+        String descText = descInput.getText().toString();
+        String entryType = entry_type_spinner.getSelectedItem().toString();
+        String dynamicText1 = dynamicInput1.getText().toString();
+        String dynamicText2 = dynamicInput2.getText().toString();
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.addAll(tagList);
         FuzzySearcher search = new FuzzySearcher();
+        FuzzyEntry newEntry = null;
 
+        //check name field
         if (nameText.equals("")) {
             Toast.makeText(getActivity(), "The name of this item must be non-empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        //check description field
+        if (descText.equals("")) {
+            Toast.makeText(getActivity(), "The description of this item must be non-empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        //check extrafield1
+        if(dynamicText1.equals("")){
+            Toast.makeText(getActivity(), "The DynamicInput1 of this item must be non-empty!", Toast.LENGTH_SHORT).show();
+        }
+
+        //check extrafield2
+        if(!(entryType.equals("Other")) && dynamicText2.equals("")){
+            Toast.makeText(getActivity(), "The DynamicInput2 of this item must be non-empty!", Toast.LENGTH_SHORT).show();
         }
 
         HashSet<FuzzyEntry> hits = search.filterByName(nameText);
@@ -291,6 +365,54 @@ public class CreateEntryFragment extends Fragment {
                 return;
             }
         }
+
+        switch (entryType) {
+            case "Lemma":
+                newEntry = new Lemma();
+                newEntry.setName(nameText);
+                newEntry.setDescription(descText);
+                newEntry.setTags(tagsList);
+                newEntry.putString("precondition", dynamicText1);
+                newEntry.putString("postcondition", dynamicText2);
+
+                break;
+            case "Definition":
+                newEntry = new Definition();
+                newEntry.setName(nameText);
+                newEntry.setDescription(descText);
+                newEntry.setTags(tagsList);
+                newEntry.putString("symbolContent", dynamicText1);
+                newEntry.putString("symbolReplacer", dynamicText2);
+                break;
+            case "Proof":
+                newEntry = new Proof();
+                newEntry.setName(nameText);
+                newEntry.setDescription(descText);
+                newEntry.setTags(tagsList);
+                newEntry.putString("statementName", dynamicText1);
+                newEntry.putString("content", dynamicText2);
+                break;
+            case "Theorem":
+                newEntry = new Theorem();
+                newEntry.setName(nameText);
+                newEntry.setDescription(descText);
+                newEntry.setTags(tagsList);
+                newEntry.putString("precondition", dynamicText1);
+                newEntry.putString("postcondition", dynamicText2);
+                break;
+            case "Other":
+                newEntry = new Other();
+                newEntry.setName(nameText);
+                newEntry.setDescription(descText);
+                newEntry.setTags(tagsList);
+                newEntry.putString("statement", dynamicText1);
+
+                break;
+            default:
+                throw new Exception("Invalid FuzzyEntry type. Check FuzzyEntry.entryType()");
+
+        }
+        newEntry.save();
     }
 }
 
