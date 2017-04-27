@@ -44,15 +44,16 @@ public class DisplayEntryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)   {
 
-        /*
+
         FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
         pumpingLemma.setName("Pumping Lemma");
         pumpingLemma.setDescription("dummy description");
         ArrayList<String> dummyTags = new ArrayList<>(Arrays.asList("tag1", "tag2", "tag3"));
         pumpingLemma.setTags(dummyTags);
-*/
+
 
         try{
+<<<<<<< HEAD
             Bundle bundle = this.getArguments();
             String queryName = bundle.getString("item_name");
 
@@ -65,6 +66,10 @@ public class DisplayEntryFragment extends Fragment {
                     renderFuzzyEntry(entry);
                 }
             }
+=======
+            // AUSTIN GET FuzzyEntry OBJECT HERE
+            renderFuzzyEntry(pumpingLemma);
+>>>>>>> 759e443ee8e1e87092d411459dd222c19c578591
         }
         catch (Exception e){
             System.out.println(e.getMessage());
