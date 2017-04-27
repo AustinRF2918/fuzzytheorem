@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -57,10 +58,15 @@ public class SearchEntryFragment extends Fragment {
     private ArrayAdapter<FuzzyEntry> resultListAdapter;
     private ArrayAdapter fuzzyItemAdapter;
 
+    // Elements for switching to the display fragment
+    Fragment newMainFragment;   //newFragment is the next fragment that is going to be placed over the main activity
+    FragmentTransaction transaction;
+
     // Requerying on every search would SUCK performance-wise.
     float searchThreshold;
     boolean dirty;
     boolean tagsEmpty;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,6 +98,8 @@ public class SearchEntryFragment extends Fragment {
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
+
+        resultListView.setOnItemClickListener(displayFuzzyEntry());
 
         typeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -164,6 +172,26 @@ public class SearchEntryFragment extends Fragment {
                     removeTag(item);
                     performSearch();
                 } catch (IllegalStateException e)  {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    }
+
+    @NonNull
+    private AdapterView.OnItemClickListener displayFuzzyEntry() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FuzzyEntry entry = resultList.get(position);
+                try {
+                    newMainFragment = new DisplayEntryFragment();
+                    transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.activity_main, newMainFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } catch (IllegalStateException e)  {
+                    //TODO implent excpetion handler for being unable to pass FuzzyEntry to disply fragment
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

@@ -41,15 +41,19 @@ public class DisplayEntryFragment extends Fragment {
     //method is currently only used to pass a dummy FuzzyEntry to renderFuzzyEntry
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)   {
+
+        /*
         FuzzyEntry pumpingLemma = new Lemma("honestly...", "I never knew what the Yoon was talking about here.");
         pumpingLemma.setName("Pumping Lemma");
         pumpingLemma.setDescription("dummy description");
         ArrayList<String> dummyTags = new ArrayList<>(Arrays.asList("tag1", "tag2", "tag3"));
         pumpingLemma.setTags(dummyTags);
+*/
 
 
         try{
-            renderFuzzyEntry(pumpingLemma);
+
+            renderFuzzyEntry(fuzzyEntry);
         }
         catch (Exception e){
             //TODO Add specific exception case and handle properly

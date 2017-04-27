@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
                 case "Display":
                     newMainFragment = new DisplayEntryFragment();
                     break;
+                //TODO safely remove the display option from this method as well as the actual menu
             }
         }
         catch (Exception e){
