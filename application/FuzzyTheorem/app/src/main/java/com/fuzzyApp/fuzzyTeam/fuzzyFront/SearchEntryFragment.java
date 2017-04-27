@@ -88,17 +88,22 @@ public class SearchEntryFragment extends Fragment {
 
         tagList = new LinkedList<>();
         resultList = new ArrayList<>();
-        FuzzyEntry x = new Theorem("Hello", "world");
-        x.setName("This is the name");
-        x.setDescription("This is the Desc");
-        resultList.add(x);
-
-
 
         tagListAdapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, tagList);
         tagListView.setAdapter(tagListAdapter);
         tagListView.setOnItemClickListener(removeTag());
 
+        typeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                performSearch();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //This Adapter renders FuzzyEntry objects Names and Descriptions in the resultListView.
         resultListAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1,  resultList){
@@ -115,25 +120,15 @@ public class SearchEntryFragment extends Fragment {
         };
         resultListView.setAdapter(resultListAdapter);
 
-        //resultListView.setListAdapter(new ArrayAdapter<String[]>(this, android.R.layout.simple_list_item_2, R.id.result_list, resultList) {
-        };
-
-
-
-
-    /*
-        resultListView.setAdapter(fuzzyItemAdapter);
-        addTagButton.setOnClickListener(addTag());
-
         entryTitleInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                performSearch();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                performSearch();
             }
 
             @Override
@@ -142,10 +137,8 @@ public class SearchEntryFragment extends Fragment {
             }
         });
 
-
+        addTagButton.setOnClickListener(addTag());
     }
-
-    */
 
     @NonNull
     private View.OnClickListener addTag() {
@@ -153,6 +146,7 @@ public class SearchEntryFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     addNewTag();
+                    performSearch();
                 } catch (IllegalStateException e) {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -168,6 +162,7 @@ public class SearchEntryFragment extends Fragment {
                 String item = tagList.get(position);
                 try {
                     removeTag(item);
+                    performSearch();
                 } catch (IllegalStateException e)  {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -210,28 +205,33 @@ public class SearchEntryFragment extends Fragment {
 
     public void performSearch() {
         HashSet<FuzzyEntry> nameMatches = search.filterByName(entryTitleInput.getText().toString());
+        System.out.println("A");
         System.out.println(nameMatches);
 
         HashSet<FuzzyEntry> typeMatches = search.filterByCategory(typeSelector.getSelectedItem().toString());
+        System.out.println("B");
         System.out.println(typeMatches);
 
         HashSet<FuzzyEntry> intersection = new HashSet<FuzzyEntry>(nameMatches);
         intersection.retainAll(typeMatches);
+        System.out.println("d");
+        System.out.println(intersection);
 
-        if (tagList.isEmpty()) {
+        if (!tagList.isEmpty()) {
             ArrayList convertedTagList = new ArrayList<>();
             convertedTagList.addAll(tagList);
             HashSet<FuzzyEntry> tagMatches = search.filterByTags(convertedTagList);
-            System.out.println(tagMatches);
             intersection.retainAll(tagMatches);
         }
 
         resultList.clear();
 
-        for (FuzzyEntry entry : resultList) {
+        for (FuzzyEntry entry : intersection) {
             resultList.add(entry);
         }
+        System.out.println("C");
+        System.out.println(resultList);
 
-        fuzzyItemAdapter.notifyDataSetChanged();
+        resultListAdapter.notifyDataSetChanged();
     }
 }
