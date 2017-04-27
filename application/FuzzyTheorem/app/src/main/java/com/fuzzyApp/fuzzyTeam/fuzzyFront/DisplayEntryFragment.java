@@ -53,7 +53,6 @@ public class DisplayEntryFragment extends Fragment {
 
 
         try{
-<<<<<<< HEAD
             Bundle bundle = this.getArguments();
             String queryName = bundle.getString("item_name");
 
@@ -66,10 +65,7 @@ public class DisplayEntryFragment extends Fragment {
                     renderFuzzyEntry(entry);
                 }
             }
-=======
-            // AUSTIN GET FuzzyEntry OBJECT HERE
             renderFuzzyEntry(pumpingLemma);
->>>>>>> 759e443ee8e1e87092d411459dd222c19c578591
         }
         catch (Exception e){
             System.out.println(e.getMessage());
